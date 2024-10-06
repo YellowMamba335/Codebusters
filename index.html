@@ -161,16 +161,26 @@
   document.getElementById("crib").innerHTML = "You are given the quote contains " + segment;
 </script>
 <script>
+  var time = 0
+  function timer() {
+    time += 1
+    return time
+    console.log(time) 
+  }
   function checkAnswer() {
     var answer = document.getElementById("checkmywork").value;
     answer = answer.toLowerCase().replace(/[^a-z]/g, "");
     console.log(modrandomquote)
     console.log(answer)
     if (answer == modrandomquote) {
-      alert("Correct")
+      alert("Correct \nYour time was " + time + " seconds")
     }
     else {
       alert("Dumb ahh");
     }
   }
+  //while(true) {
+  setInterval(timer, 1000);
+  //}
 </script> 
+  
