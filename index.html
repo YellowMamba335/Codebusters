@@ -1,3 +1,32 @@
+<link rel="stylesheet" href="coder.min.css" media="screen" />
+<nav class="navigation">
+    <a class="navigation-title">
+      Codebusters
+    </a>
+    <input type="checkbox" id="menu-toggle" />
+    <label class="menu-button float-right" for="menu-toggle"><i class="fas fa-bars"></i></label>
+    <ul class="navigation-list">
+          <li class="navigation-item">
+            <a class="navigation-link" href="#">Complete Columnar</a>
+          </li>
+          <li class="navigation-item">
+            <a class="navigation-link" href="#">Hill</a>
+          </li>
+          <li class="navigation-item">
+            <a class="navigation-link" href="#">Porta</a>
+          </li>
+          <li class="navigation-item">
+            <a class="navigation-link" href="#">Baconian</a>
+          </li>
+          <li class="navigation-item">
+            <a class="navigation-link" href="#">Fractionated Morse</a>
+          </li>
+          <li class="navigation-item">
+            <a class="navigation-link" href="#">Cryptarithm</a>
+          </li>
+    </ul>
+</nav>
+
 <div id="quote"></div><br>
 <div id="crib"></div><br>
 <input size="3" id="box1">
@@ -78,6 +107,7 @@
       result += "<br>";
     }
 
+    console.log("result: " +  result)
     document.getElementById("grid").innerHTML = result;
 
     var result2 = '';
