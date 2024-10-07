@@ -1,0 +1,152 @@
+<link rel="stylesheet" href="coder.min.css" media="screen" />
+<style>
+  table td{
+    border: 0px solid white;
+    border-spacing:none;
+  }
+  td {
+    padding:.5rem;
+  }
+  table {
+    display: inline;
+  }
+</style>
+<nav class="navigation">
+    <a class="navigation-title">
+      Codebusters
+    </a>
+    <input type="checkbox" id="menu-toggle" />
+    <label class="menu-button float-right" for="menu-toggle"><i class="fas fa-bars"></i></label>
+    <ul class="navigation-list">
+          <li class="navigation-item">
+            <a class="navigation-link" href="https://yellowmamba335.github.io/Codebusters/">Complete Columnar</a>
+          </li>
+          <li class="navigation-item">
+            <a class="navigation-link" href="#">Hill</a>
+          </li>
+          <li class="navigation-item">
+            <a class="navigation-link" href="#">Porta</a>
+          </li>
+          <li class="navigation-item">
+            <a class="navigation-link" href="#">Baconian</a>
+          </li>
+          <li class="navigation-item">
+            <a class="navigation-link" href="#">Fractionated Morse</a>
+          </li>
+          <li class="navigation-item">
+            <a class="navigation-link" href="#">Cryptarithm</a>
+          </li>
+    </ul>
+</nav>
+<div id="key"></div>
+<div id="inverse"></div><br>
+<div id="quote"></div>
+<div id="textthing1">Answer Boxes:</div>
+<div id="gridans"></div><br>
+<button onclick=checkanswer()>Check</button><br><br>
+<div id="textthing">2 x 1 Matrices of Ciphertext:</div><br>
+<div id="gridmtx"></div>
+
+<script>
+    keywordlist = ["rial", "loaf","dear","zarf","axle","hump","poor","till","pent","doth"]
+    keyword = keywordlist[Math.floor(Math.random()*20)].split("") 
+    var key = []
+    for (let i=0; i<4; i++) {
+        key.push(keyword[i].charCodeAt()-97)
+    }
+    console.log(key)
+    console.log(keyword)
+    var keymatrix
+    keymatrix = [[key[0], key[1]], [key[2], key[3]]] 
+    console.log(keymatrix)
+    document.getElementById("key").innerHTML = "The following is encrypted with the key " + keyword.join("") + " = " + 
+    `<table>
+    <tr>
+    <td>${keymatrix[0][0]}</td>
+    <td>${keymatrix[0][1]}</td>
+    </tr>
+    <tr>
+    <td>${keymatrix[1][0]}</td>
+    <td>${keymatrix[1][1]}</td>
+    </tr>
+    </table>`
+    document.getElementById("inverse").innerHTML = "Inverse of matrix: " + 
+    `<table>
+    <tr>
+    <td><input size="1" id="a"></td>
+    <td><input size="1" id="b"></td>
+    </tr>
+    <tr>
+    <td><input size="1" id="c"></td>
+    <td><input size="1" id="d"></td>
+    </tr>
+    </table>`
+    quotebank = ['#3 pencils and quadrille pads.', 'All flourishing is mutual.', 'A stumble may prevent a fall.', 'A witty saying proves nothing.', 'Achievement has no color', 'Action expresses priorities.', 'Affection is catching', 'All knowledge is worth having.', 'An artist is his own fault.', 'Art is science made clear.', 'Assertion is not proof', "Birds don't eat canned worms", 'Books do furnish a room.', 'Can we survive technology?', 'Cleverness is not wisdom.', 'Conflicts are expensive.', 'Darkness feeds on apathy.', 'Do you need space? Join NASA!', 'Encourage your own greatness.', 'Enough talk, now read!', 'Excuse Me While I Succeed!', 'Failure has its successes.', 'Fake life is expensive.', 'Find a voice in a whisper.', 'Fortune assists the bold.', 'Gravity always wins', 'Habit is ten times nature.', 'Happiness lies in hope.', 'Happy is as happy does.', 'He who is good is happy.', 'History is a great dust heap.', 'I am the captain of my soul.', "I don't like lollipops.", 'I dwell in possibility.', 'If we listen, we shall learn.', 'If you want to be happy, be.', "I'm in the mood to multiply", 'Imagine others complexly.', 'In all things give thanks.', "It's always too soon to quit.", "It's not over until you win", "It's pretty confusing.", 'Keep calm and eat cookies.', 'Knowledge is strength.', "Let's get things straight.", 'Living is my job and my art.', 'Make today worth remembering.', 'Man is a tool-making animal.', 'Meow means woof in cat.', 'Momentum builds success.', 'More matter with less art.', 'My geekness is a-quivering.', 'My main focus is on my game.', 'Mystery is never disproof.', 'Never follow the crowd.', 'Never forget your past.', 'One planet, one experiment.', "Order is heaven's first law.", 'Our future is up to us.', 'Perfect is the enemy of good.', 'Reach for the stars.', 'said Sirius seriously', 'Science is magic that works.', 'Shut your eyes and see.', 'Start small and keep going.', 'That was the week that was.', 'The medium is the message.', 'The past can not be cured.', 'The river is everywhere.', 'The Universe in a Nutshell', 'Think with your whole body.', 'To have hope is to be happy.', 'To live is to be haunted.', 'We cannot just live any how.', 'We convince by our presence.', 'We need no language to laugh', 'What we think, we become.', 'Which was to be proved.', 'Whose life is it anyway?', 'Why? Learn, and Innovate!', 'Written words can also sing.', 'You cannot predict the future.', 'Your story is important.']
+    var randomquote = quotebank[Math.floor(Math.random()*quotebank.length)]
+    var letrandomquote = randomquote.toLowerCase().replace(/[^a-z]/g, "")
+    console.log("original letrandomquote: " + letrandomquote)
+    console.log("length: " +letrandomquote.length)
+    if (letrandomquote.length % 2 === 1) {
+      letrandomquote = letrandomquote.split("")
+      letrandomquote.push("z")
+      letrandomquote = letrandomquote.join("")
+    }
+    var encryptmtx = []
+    for (let j=0; j<letrandomquote.length/2; j++) {
+        encryptmtx.push([letrandomquote[2*j].charCodeAt()-97, letrandomquote[2*j+1].charCodeAt()-97])
+    }
+    console.log("encryptmtx: " +encryptmtx)
+    var ciphertxtmtx = []
+    for (let k=0; k<encryptmtx.length; k++) {
+        ciphertxtmtx.push([(keymatrix[0][0]*encryptmtx[k][0]+keymatrix[0][1]*encryptmtx[k][1])%26], [(keymatrix[1][0]*encryptmtx[k][0]+keymatrix[1][1]*encryptmtx[k][1])%26])
+    }
+    console.log("ciphertxtmtx: " + ciphertxtmtx)
+    var ciphertext = []
+    for (let l=0; l<ciphertxtmtx.length; l++) {
+      ciphertext.push(String.fromCharCode(ciphertxtmtx[l][0]+65))
+    }
+    ciphertext = ciphertext.join("")
+    console.log("ciphertext: " + ciphertext)
+    document.getElementById("quote").innerHTML = ciphertext
+
+    var boxes = []
+    for (let m=0; m<ciphertext.length; m++) {
+      boxes.push(`<input size="1" id= "${m}a">`)
+    }
+    boxes = boxes.join(" ")
+    document.getElementById("gridans").innerHTML = boxes
+
+    var mtxboxes = []
+    for (let n=0; n<ciphertext.length/2; n++) {
+      mtxboxes.push(`<table><tr>
+    <td><input size="1" id= "${n}b"></td></tr>
+    <tr><td><input size="1" id= "${n}b"></td>
+    </tr></table>`, " ")
+    }
+    mtxboxes = mtxboxes.join(" ")
+    document.getElementById("gridmtx").innerHTML = mtxboxes
+
+    var time = 0
+    function timer() {
+      time += 1
+      return time
+      console.log(time) 
+    }
+
+    function checkanswer() {
+      var answer = []
+      for (let o=0; o<ciphertext.length; o++) {
+        answer.push(document.getElementById(`${o}a`).value)
+      }
+      answer = answer.join("")
+      console.log(answer)
+      if (answer == letrandomquote) {
+        alert("Correct \n Your time was " + time + " seconds")
+      }
+      else {
+        alert("dumb ahh")
+      }
+    }
+    setInterval(timer, 1000);
+</script>
+
