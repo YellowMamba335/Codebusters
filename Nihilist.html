@@ -1,0 +1,178 @@
+<link rel="stylesheet" href="coder.min.css" media="screen" />
+<style>
+  table td{
+    border: 0px solid white;
+    border-spacing:none;
+  }
+  td {
+    padding:.5rem;
+  }
+  table {
+    display: inline;
+    border: 0px solid white
+  }
+</style>
+<nav class="navigation">
+    <a class="navigation-title">
+      Codebusters
+    </a>
+    <input type="checkbox" id="menu-toggle" />
+    <label class="menu-button float-right" for="menu-toggle"><i class="fas fa-bars"></i></label>
+    <ul class="navigation-list">
+          <li class="navigation-item">
+            <a class="navigation-link" href="https://yellowmamba335.github.io/Codebusters/">Complete Columnar</a>
+          </li>
+          <li class="navigation-item">
+            <a class="navigation-link" href="#">Hill</a>
+          </li>
+          <li class="navigation-item">
+            <a class="navigation-link" href="#">Porta</a>
+          </li>
+          <li class="navigation-item">
+            <a class="navigation-link" href="#">Baconian</a>
+          </li>
+          <li class="navigation-item">
+            <a class="navigation-link" href="#">Fractionated Morse</a>
+          </li>
+          <li class="navigation-item">
+            <a class="navigation-link" href="#">Cryptarithm</a>
+          </li>
+    </ul>
+</nav>
+
+<div id="stem"></div>
+<div class="display" id="display"></div><br>
+<div>Polybius Table</div>
+<div class= "polybiu" id="polybius"></div>
+<button onclick=checkanswer() id="checkanswer">Check</button><br>
+
+<script>
+    var quotes = ['#3 pencils and quadrille pads.', "There ain't no journey what don't change you some.", "A champion is someone who gets up when he can't.", 'A friendship that can end never really began.', 'A goal without a plan is just a wish.', 'A library is more precious than a bank.', 'A library is thought in cold storage.', 'A little rebellion now and then is a good thing.', 'A man is known by the books he reads.', 'A Penny Saved is a Penny Earned', 'A positive change in approach improves quality.', "A proverb is one man's wit and all men's wisdom.", 'A true friend is the best Possession.', 'A witty saying proves nothing.', 'Acquiring knowledge is a form of imitation.', 'Act as if what you do makes a difference. It does.', 'Action is the universal language of success.', 'Aim higher in case you fall short.', 'All art is but dirtying the paper delicately.', "All feedback is relevant, even if it's not true.", 'All knowledge is worth having.', "All the fun's in how you say a thing.", 'Always do what you are afraid to do.', 'Anything can happen in life, especially nothing.', 'Anything worthy is worth the fight!', 'As long as one keeps searching, the answers come.', 'As to the Adjective: when in doubt, strike it out.', "Awake, arise or be for ever fall'n.", 'Baking is both an art and a science.', 'Be humble: have the courage to speak the truth.', "Be so good they can't ignore you.", 'Be willing to be a beginner every single morning.', 'Believe and act as if it were impossible to fail.', 'Books are a uniquely portable magic.', 'Boredom can be a lethal thing on a small island.', 'But how could you live and have no story to tell?', 'But still try for who knows what is possible!', 'But the cure for most obstacles is, Be decisive.', 'But to us, probability is the very guide of life.', "But what is life if you don't live it?", 'Change your perspective and change your life', 'Complex question can only be solved by patience.', 'Conflicts have small beginnings.', 'Discontent is the first necessity of progress.', 'Distrust any enterprise that requires new clothes.', "Don't act your role, be yourself.", "Don't just listen understand it.", "Don't just wish for success, earn it!", "Don't spell part backwards. It's a trap.", "Don't try to fix me, I'm not broken...", 'Even a child is known by his doings.', 'Even a trillion dollars is made up of cents.', 'Even strength must bow to wisdom sometimes.', 'Every moment of light and dark is a miracle.', 'Everyday, give yourself a good mental shampoo.', 'Find a purpose to serve, not a lifestyle to live.', 'For every fact there is an infinity of hypotheses.', 'From a small seed a mighty trunk may grow.', "Give me a museum and I'll fill it.", 'Go as far as you can see and you will see further.', 'Going back to something is harder than you think.', 'Great leaders create more leaders, not followers.', 'Happiness cannot be pursued; it must ensue.', 'Happiness equals reality minus expectations.', 'Happiness is answering your calling.', 'Hardships make or break people.', 'He who can have patience can have what he will.', 'He who speaks without an attentive ear is mute.', 'Helpfulness is the enemy of greed', "History doesn't repeat itself, it just stutters.", 'Humor is also a way of saying something serious.', 'I am not omniscient, but I know a lot.', 'I do not fear computers. I fear the lack of them.', 'I have a shocking memory - I remember everything.', 'I have nothing to declare except my genius.', 'I have stitched life into me like a rare organ', 'I know certain truths about life.', 'I know nothing except the fact of my ignorance.', 'I only know that I know nothing', 'I think that success is having fun.', "I think therefore I can't get anything done.", "I was willing to accept what I couldn't change.", 'I wonder if you can refuse to inherit the world.', 'I worship the quicksand he walks in.', "I'd learned that some things are best kept secret.", 'Ideas shape the course of history.', 'If a person is not free, his right is restricted.', 'If I can do it, you can do it. Anybody can.', 'If obstacles are large, jump higher.', "If you can't win by reason, go for volume.", "If you don't laugh, you'll cry.", 'If you read good books, you will be well-informed.', 'If you surrendered to the air, you could ride it.', 'If you want to find happiness, find gratitude.', "I'm not stubborn. My way is just better.", "I'm so optimistic my blood type is B Positive", 'Imitation is the sincerest form of television.', 'In chaos is where learning happens the most.', 'In order to fail, you must try first.', 'In the absence of vision, there are nightmares.', 'Instead of cursing the darkness, light a candle.', 'Invest your energy in the things you can control.', 'It is not the mountain we conquer but ourselves.', "It's easy to forget things you don't need anymore.", "I've got nothing to do today but smile.", 'Just a grain can bring a bird down from the skies.', 'Just be yourself, there is no one better.', "Just think. We're whizzing through the universe.", "Know what you're talking about.", 'Knowing it and seeing it are two different things.', 'Knowledge is in the end based on acknowledgement.', 'Knowledge is more than equivalent to force.', 'Knowledge is power as well as fame.', 'Knowledge not shared remains unknown', 'Knowledge will help you to solve any problem', 'Knowledge without action is empty as a shadow.', 'Leaders prioritize what they want.', 'Leadership is developed daily, not in a day.', 'life is a continous journey of transformation', 'Life is a journey worth making.', 'Life is either daring adventure or nothing.', 'Life is like a box of chocolates.', 'Life is more fun if you play games.', 'Light generates life and causes it to grow.', 'living is more than just a pulse', 'Love is the absence of judgment.', "Luck is believing you're lucky.", "Magic's just science that we don't understand yet.", 'Make your success a habit not just an act of whim.', 'Making comparisons can spoil your happiness.', 'Math is my Passion. Engineering is my Profession.', 'Math puns are the first sine of madness!', 'May success knock your door always', 'Mirrors should think longer before they reflect.', 'Money talks ...but all mine ever says is good-bye.', 'Morning will come, it has no choice.', "Mother Nature doesn't care if you're having fun.", 'Never confuse belief with knowledge.', 'Never fire a laser at a mirror.', 'Never regret anything that made you smile.', 'Never ruin an apology with an excuse.', 'Never was anything great achieved without danger.', 'No masterpiece was ever created by a lazy artist.', 'No sanction can stand against ignited minds.', "Not on one strand are all life's jewels strung.", "Nothing is fun until you're good at it.", 'Nothing succeeds like indifference to success.', 'Of all things, I liked books best.', "OK, so what's the speed of dark ?", 'On the other hand, you have different fingers.', "Once I get on a puzzle, I can't get off.", 'Once we accept our limits, we go beyond them.', 'One can never have enough socks', 'One lives in the hope of becoming a memory.', 'Only through knowing could a person become strong.', "Opportunities don't happen, you create them.", 'Or, rather, let us be more simple and less vain.', 'Our lives are just a journey back to THE LIGHT', 'Our true mentor in life is science.', 'Peace begins when expectations end.', 'People are sheep. TV is the shepherd.', 'Perfection is an undiscovered jewel.', 'Prosperity makes some friends and many enemies.', 'Quality is all about taking care of the details.', 'Quantum Mechanics: The stuff dreams are made of.', 'Quiet people have the loudest minds.', 'Reading a book is like re-writing it for yourself.', 'Rejection is an opportunity for your selection.', "Rockets are cool. There's no getting around that.", "Science doesn't take sides, does it?", 'Science is based not on faith but in skeptism', 'Science is only a Latin word for knowledge', 'Science is organized knowledge.', 'Science is the poetry of reality.', 'Search for the good ways. And walk in right path.', 'Show me a hero and I will write you a tragedy.', 'Smile suppress worries as Rose suppress thorns.', 'Snoring keeps the monsters away.', 'Some people feel the rain. Others just get wet.', 'Some say life is the thing, but I prefer reading.', 'Something deeply hidden had to be behind things.', 'Somewhere, the zebra is dancing.', "Spend the afternoon, you can't take it with you.", 'State first, subject second, statesman last.', 'Statistics are no substitute for judgment.', 'Stories, knowledge...they set the mind alight.', 'Storms make trees take deeper roots.', 'Strangers are just friends waiting to happen.', 'Success is a decision, not a gift.', 'Success without happiness is a mirage of life.', 'The beautiful is always bizarre.', 'The best substitute for brains is silence.', "The book you don't read won't help.", 'The deeper a thing is, the more interesting it is', 'The earliest fisherman catches the fattest fish.', 'The easiest way to do anything is properly.', 'The energy of the mind is the essence of life.', 'The function of freedom is to free someone else.', 'The gods too are fond of a joke.', 'The grand thing is to be able to reason backwards.', 'The greatest ideas are the simplest.', 'The history of art is the history of revivals.', 'The important thing is not to stop questioning.', 'The joy of a spirit is the measure of its power.', 'The more thou search, the more thou shall marvel.', 'The only joy in the world is to begin.', 'The only real valuable thing is intuition.', 'The perfect is the enemy of the good.', "The physicist's greatest tool is his wastebasket.", 'The possibility of the dream gives strength.', 'The present is a point just passed.', 'The purpose of fun is to live it.', 'The real mystery is the known, not the unknown.', 'The reward of a thing well done is having done it.', 'The secret to success is constancy of purpose.', 'The smaller the creature, the bolder its spirit.', 'The solar system consists of Jupiter plus debris.', 'The sprint is like life ... blink and you miss it.', 'The universe is made of stories, not of atoms.', 'The way a person stands may disguise who they are.', 'The wishbone will never replace the backbone', 'The world is a stage and the play is badly cast.', 'The years teach much which the days never know.', 'There are no traffic jams on the extra mile.', 'There is no success where there are no secrets.', 'There was, I found, always more to learn.', 'Think before you speak. Read before you think.', 'This book fills a much-needed gap.', "Those who don't jump will never fly.", 'Those who hurt others will also hurt themselves.', 'Time flies over us, but leaves its shadow behind.', 'Time is not made of atoms to manipulate it back.', 'Time plays a major role in achieving success', 'Tis an ill cook that cannot lick his own fingers.', 'To be a success, think of happiness.', 'To be fond of learning is near to wisdom.', 'To be noble, help others to succeed', 'To be too knowing is a downfall.', 'To listen be silent, to succeed be persistent', 'To those who will see, the world waits.', 'Too low they build, who build beneath the stars.', 'Too many locks, not enough keys.', "Torture numbers, and they'll confess to anything.", 'Travel far enough, you meet yourself.', "Turns out even NASA can't improve on duct tape.", "Unbeing dead isn't being alive.", 'Universe consists of frozen light.', 'Victory only comes through wear and tear.', 'Vision is your first creation of the future.', 'War is never a lasting solution for any problem.', 'We have art to save ourselves from the truth.', 'We learn and grow Always building on what we know', 'We made too many wrong mistakes.', 'We must be the change we wish to see in the world.', 'We must work while we have strength.', 'Well done is better than well said.', "We're going to turn this team around 360 degrees.", 'What did the vegan say? I made a big missed steak.', "What dog can't bark? A hot dog.", 'What is a rebel? A man who says no.', "What is an alien's favorite candy? A Mars bar!", 'What we see depends mainly on what we look for.', "What's a horse's favorite sport? Stable Tennis.", "What's meant to be will always find a way", 'When we are centered in joy, we attain our wisdom.', 'When you develop yourself, you grow humanity.', 'Where is human nature so weak as in the bookstore?', 'Where there is unity there is always victory.', 'Who can count the sand by the sea?', 'Who says life is fair, where is that written?', "Why don't you light that candle ?", "Why don't you write books people can read?", "Win or lose, you are trying, that's what matters.", 'Wisdom is the daughter of experience.', 'Wit is the only wall between us and the dark.', 'With time involved, everything is temporary.', 'Without knowledge, we are weak.', 'Without music, life would be a blank to me.', 'Wonder is the seed of knowledge', "Words may show a man's wit, actions his meaning.", 'Yell codebusters rule for a hundred extra points', 'You are worth about 3 dollars worth in chemicals.', 'You can do anything you set your mind to', 'You can know a lot and still be stupid.', 'You cannot predict the future.', "You can't have everything. Where would you put it?", "You fall at times and that's how you learn.", 'You get what anybody gets - you get a lifetime.', 'You live but once; you might as well be amusing.', 'You may delay, but time will not.', 'You rush a miracle worker, you get lousy miracles!', 'You were born to stand out, stop trying to fit in.', "You'll never find a rainbow if you're looking down", 'Your daily product determines how far you go']
+    var randomquote = quotes[Math.floor(Math.random()*quotes.length)].toLowerCase().replace(/[^a-z- ]/g, "")
+    randomquote = randomquote.replace(/[-]/g, "")
+    var randquotewosp = randomquote.replace(/[ --]/g, "")
+    console.log(randomquote)
+    console.log(randquotewosp)
+    var polykeylist = ["revenge","trouser","physics","execute","voucher","graduate","reporter","econobox","imposter","tendency", "beginning", "emergency", "pollution", "champagne", "politician"]
+    var polykey = polykeylist[Math.floor(Math.random()*15)].split("")
+    var keywordlist = ["flash","sleep","crowd","woman","clerk","wheel","cover","uncle","spray","stain"]
+    var keyword = keywordlist[Math.floor(Math.random()*10)].split("")
+    function removeDuplicates(arr) {
+    return arr.filter((item,
+        index) => arr.indexOf(item) === index);
+    }
+    polykey = removeDuplicates(polykey).join("")
+    var randomquotewithoutjs = randomquote.split("")
+    for (let i=0; i<randomquote.length; i++) {
+        if (randomquote[i] == "j") {
+            randomquotewithoutjs.splice(i, 1, "i")
+        }
+    }
+    randomquotewithoutjs = randomquotewithoutjs.join("")
+    randomquotewithoutjs = randomquotewithoutjs.replace(/[-]/g, "")
+    console.log(randomquotewithoutjs)
+    var polybiu = polykey.split("")
+    polybiu.push("a", "b", "c", "d", "e", "f", "g", "h", "i", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z")
+    polybiu = removeDuplicates(polybiu)
+    polybiu = polybiu.join("")
+    var polybiuthing = [[11,polybiu[0]],[12,polybiu[1]],[13,polybiu[2]],[14,polybiu[3]],[15,polybiu[4]],[21,polybiu[5]],[22,polybiu[6]],[23,polybiu[7]],[24,polybiu[8]],[25,polybiu[9]],[31,polybiu[10]],[32,polybiu[11]],[33,polybiu[12]],[34,polybiu[13]],[35,polybiu[14]],[41,polybiu[15]],[42,polybiu[16]],[43,polybiu[17]],[44,polybiu[18]],[45,polybiu[19]],[51,polybiu[20]],[52,polybiu[21]],[53,polybiu[22]],[54,polybiu[23]],[55,polybiu[24]]]
+    polybicus = [11, 12, 13, 14, 15, 21, 22, 23, 24, 25, 31, 32, 33, 34, 35, 41, 42, 43, 44, 45, 51, 52, 53, 54, 55]
+    document.getElementById("polybius").innerHTML = `<table><tr><td></td><td>1</td><td>2</td><td>3</td><td>4</td><td>5</td></tr>
+    <tr><td>1</td><td><input size="1"></td><td><input size="1"></td><td><input size="1"></td><td><input size="1"></td><td><input size="1"></td>
+    </tr><tr><td>2</td><td><input size="1"></td><td><input size="1"></td><td><input size="1"></td><td><input size="1"></td><td><input size="1"></td>
+    </tr><tr><td>3</td><td><input size="1"></td><td><input size="1"></td><td><input size="1"></td><td><input size="1"></td><td><input size="1"></td>
+    </tr><tr><td>4</td><td><input size="1"></td><td><input size="1"></td><td><input size="1"></td><td><input size="1"></td><td><input size="1"></td>
+    </tr><tr><td>5</td><td><input size="1"></td><td><input size="1"></td><td><input size="1"></td><td><input size="1"></td><td><input size="1"></td>
+    </tr></table>`
+    
+    var keywordrep = []
+    for (let i=0; i<randquotewosp.length; i++) {
+      keywordrep.push(keyword[i%5])
+    }
+    for (let i=0; i<randomquote.length; i++) {
+      if (randomquote[i] == " ") {
+        keywordrep.splice(i, 0, " ")
+      }
+    }
+    keywordrep = keywordrep.join("")
+    console.log(keywordrep)
+    ciphernums = []
+    var display = [`<table>
+        <tr><td>Keyword: </td>
+        </tr><tr><td><br></td>
+        </tr><tr><td>Numbers: </td>
+        </tr><tr><td>Answer: </td>
+        </tr></table>`]
+    for (let i=0; i<randomquote.length; i++) {
+      var getin1 = polybiu.indexOf(randomquotewithoutjs[i])
+      var getin2 = polybiu.indexOf(keywordrep[i])
+      if (randomquote[i] != " ") {
+        ciphernums.push(polybiuthing[getin1][0] + polybiuthing[getin2][0])
+      }
+    }
+    console.log(ciphernums)
+    
+    for (let l=0; l<ciphernums.length; l++) {
+      if (ciphernums[l] != " "){
+        display.push(`<table><tr><td><input id="${-l-1}" size="1"></input></td>
+        </tr>
+        <tr><td>${ciphernums[l]}</td>
+        </tr><tr><td><input id="${-l - 601}" size="1"></input></td>
+        </tr><tr><td><input id="${l}" size="1"></input></td>
+        </tr></table>`)
+      }
+    }
+
+    for (let i=0; i<randomquote.length; i++) {
+      if (randomquote[i] == " ") {
+        ciphernums.splice(i+1, 0, " ")
+        display.splice(i+1, 0, `<table><tr><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td></tr><tr><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td></tr><tr><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td></tr><tr><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td></tr></table>`)
+      }
+    }
+    var numspaces = 0
+    for (let i=0; i<ciphernums.length; i++) {
+      if (ciphernums[i] == " "){
+        numspaces ++
+      }
+    }
+    console.log(numspaces)
+    document.getElementById("display").innerHTML = display.join("")
+
+    document.addEventListener ("keyup", (event) => {
+            var el = document.activeElement
+            if (event.key >= "a" && event.key <= "z") {
+                el.value = event.key
+                console.log(el.id)
+                if (el.id != ciphernums.length-numspaces-1 && el.id >= 0) {
+                    document.getElementById(Number(el.id)+1).focus()
+                }
+                else if (el.id != -(ciphernums.length-numspaces) && -590< el.id <0) {
+                    document.getElementById(Number(el.id)-1).focus()
+                }
+                else if (el.id < -590 && el.id != -600-(ciphernums.length-numspaces)) {
+                    document.getElementById(Number(el.id)-1).focus()
+                }
+            }
+    })
+
+    var time = 0
+    function timer() {
+        time += 1
+        return time
+        console.log(time) 
+    }
+    answer = []
+    function checkanswer() {
+      for (let i=0; i<ciphernums.length-numspaces; i++) {
+        answer.push(document.getElementById(i).value)
+      }
+      console.log(answer.join(""))
+      if (answer.join("") == randquotewosp) {
+        alert(`Correct\nYour time was ${time} seconds.`)
+      }
+      else {
+        alert(" dumb ahh")
+      }
+    }
+    setInterval(timer, 1000)
+</script>

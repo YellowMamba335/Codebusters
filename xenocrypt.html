@@ -1,0 +1,238 @@
+<link rel="stylesheet" href="coder.min.css" media="screen" />
+<style>
+  table td{
+    border: 0px solid white;
+    border-spacing:none;
+  }
+  td {
+    padding:.5rem;
+  }
+  table {
+    display: inline;
+  }
+</style>
+<nav class="navigation">
+    <a class="navigation-title">
+      Codebusters
+    </a>
+    <input type="checkbox" id="menu-toggle" />
+    <label class="menu-button float-right" for="menu-toggle"><i class="fas fa-bars"></i></label>
+    <ul class="navigation-list">
+          <li class="navigation-item">
+            <a class="navigation-link" href="https://yellowmamba335.github.io/Codebusters/">Complete Columnar</a>
+          </li>
+          <li class="navigation-item">
+            <a class="navigation-link" href="#">Hill</a>
+          </li>
+          <li class="navigation-item">
+            <a class="navigation-link" href="#">Porta</a>
+          </li>
+          <li class="navigation-item">
+            <a class="navigation-link" href="#">Baconian</a>
+          </li>
+          <li class="navigation-item">
+            <a class="navigation-link" href="#">Fractionated Morse</a>
+          </li>
+          <li class="navigation-item">
+            <a class="navigation-link" href="#">Cryptarithm</a>
+          </li>
+    </ul>
+</nav>
+
+<div id="quote"></div>
+<button onclick="checkanswer()">Check</button>
+
+<script>
+    var quotes = ["Hoy es un buen dia para tener un gran dia.",
+    "Elimina de tu vida a quien elimina tu sonrisa.",
+    "Lo mejor en la vida lo encuentras sin haberlo buscado.",
+    "Yo no estudio para saber mas, sino para ignorar menos.",
+    "Cualquier tiempo que necesites un amigo, yo estare aqui.",
+    "Todo pasa por algo, pero lo que no pasa tambien es por algo.",
+    "Hay grandes libros en el mundo y grande mundos en los libros.",
+    "La diferencia entra una flor y una mal hierba es una opinion.",
+    "Manten tus ojos en las estrellas y tus pies sobre la tierra.",
+    "Quien te odia, es porque un dia intento ser como tu y no pudo.",
+    "Todo lo que quieres, en la vida esta fuera de tu zona de confort.",
+    "La felicidad es una decisión que tenemos que tomar todos los días.",
+    "La ciencia es para el mundo moderno lo que el arte fue para el antiguo",
+    "La vida es un juego y tu eres el que decide si eres una pieza o seras un jugador.",
+    "No hay tiempo para el pasado cuando el futuro tiene mejores oportunidades.", 
+    "La ciencia es el gran antídoto contra el veneno del entusiasmo y la superstición.",
+    "Un amigo no es aquel que te cuenta sus alegrias y sus penas, un amigo es aquel que las escucha, sufre y aconseja.",
+    "Lo que se pierde en un lugar se compensa con lo que se obtiene en otro. fracasar en una ocasión y triunfar en la otra.",
+    "He amado hasta llegar a la locura; y eso a lo que llaman locura, para mi es la unica forma sensata de amar.",
+    "La ciencia es un cementerio de ideas muertas, aunque de ellas puede salir la vida.",
+    "Una idea se puede considerar como una ilusión hasta que dicha idea se convierte en realidad.",
+    "Solo seremos niños una vez en la vida. Sin embargo, siempre podremos disfrutar de la inmadurez.",
+    "Todo el mundo trata de realizar algo grande, sin darse cuenta de que la vida se compone de cosas pequeñas.",
+    "Una persona inteligente puede racionalizar cualquier cosa, una persona sabia ni lo intenta.",
+    "Esperamos que pueda suceder cualquier cosa, y nunca estamos prevenidos para nada.",
+    "Dar el ejemplo no es la principal manera de influir sobre los demás; es la única manera.",
+    "La ciencia puede ser descrita como el arte de la súper simplificación sistematizada.",
+    "Solo hay dos errores que se cometen en el camino a la verdad: No empezar, y no llegar hasta el final",
+    "Especialmente en la tecnología, necesitamos cambios revolucionarios, no cambios incrementales.",
+    "La tecnología y la robótica están avanzando y reducirán la necesidad de trabajadores en el futuro.",
+    "Hay dos cosas que son infinitas: el universo y la estupidez humana; de la primera no estoy muy seguro",
+    "Recuerda que la felicidad no depende en quién eres o qué tienes; depende únicamente en lo que piensas.",
+    "Ah, el proceso creativo es el mismo secreto en la ciencia que en el arte. Todos son absolutamente iguales.",
+    "La vida te da muchas oportunidades de arruinar, lo que significa que tienes tantas oportunidades de hacerlo bien.",
+    "Una de las cosas que hace la tecnología es crear nuevas oportunidades para trabajos deseados.",
+    "En las matemáticas el arte de proponer una pregunta debe tener un valor más alto que resolverlo.",
+    "Los conceptos y principios fundamentales de la ciencia son invenciones libres del espíritu humano.",
+    "Se ha convertido terriblemente obvio, que la tecnología ha sobrepasado nuestra humanidad.",
+    "La ciencia es la llave a nuestro futuro y si no crees en ella, entonces estas reteniendo a todos.",
+    "Las cámaras digitales son un gran invento, porque nos permiten recordar grandes momentos.",
+    "América es un país de inventores, y los más grandes inventores son los hombres del periódico.",
+    "He llevado el pensamiento científico a la literatura. Ha habido muy poca gratitud por esto.",
+    "El secreto de la existencia humana no solo está en vivir, sino también en saber para qué se vive.",
+    "Debemos llamar ciencia sólo al conjunto de las fórmulas que triunfan siempre.",
+    "Todo el resto es literatura.",
+    "Qué brillante y hermoso es un cometa que vuela a través de nuestro planeta, siempre que lo haga.",
+    "Las personas solo tienen tanta libertad como la inteligencia que desean y el coraje para tomar.",
+    "El amor a la naturaleza es algo diferente del amor a la ciencia, aunque los dos pueden ir juntos.",
+    "No te preocupes por tus problemas con las matemáticas, te puedo asegurar que los míos son mayores",
+    "Cuanto más profundo es el viaje al espacio interior, más posibilidades hay en el espacio exterior.",
+    "Es tu responsabilidad encontrar faltas en mí, es mío escucharte. Pero no esperes que yo cambie.",
+    "CONSIDERE ESTO Cuando las cosas van mal, pregúntese si podría haberlo evitado al ser infeliz.",
+    "Creemos en los actos ordinarios de valentía, en el coraje que impulsa a una persona a defender a otra.",
+    "A veces tienes que ser capaz de escucharte a ti mismo y estar bien sin que nadie más lo entienda.",
+    "Dicen que no importa la edad que tengas, cuando estás con tus hermanos, vuelves a la infancia.",
+    "La vida no es como el agua. Las cosas en la vida no necesariamente fluyen en la ruta más corta posible.",
+    "¿Alguna vez te has preguntado si la persona en el charco es real y solo eres un reflejo de él?",
+    "Todos sabemos que vamos a morir; Lo que importa es el tipo de hombres y mujeres que enfrentamos.",
+    "Si la experiencia es el mejor maestro, no hay nada que se aproxime a la experiencia de la vida.",
+    "Nuestro mundo interior es el templo más grande y la belleza natural más grande, hay que reconocerlo para que sea precioso.",
+    "Siempre he sido muy parcial con respecto a la ciencia, y cuando era más joven, concentré casi todos mis esfuerzos en ello.",
+    "Hemos establecido la civilización de manera que losmás cruciales elementos dependen de la ciencia y la tecnología.",
+    "No importa lo que haga, cada persona en la tierra juega un papel central en la historia del mundo. Y normalmente él no lo sabe.",
+    "Solo dos cosas son infinitas, el universo y la estupidez humana, y no estoy seguro acerca del universo.",
+    "No debes juzgar a alguien hasta que hayas caminado una milla a través de un túnel subterráneo en sus incómodos zapatos.",
+    "Soy muy educado por naturaleza, incluso las voces en mi cabeza dejan que las demás terminen sus oraciones.",
+    "En física, no tienes que andar haciendo problemas para ti mismo. La naturaleza lo hace por ti.",
+    "Cualquier cosa que lo debilite, física, intelectual y espiritualmente, lo rechaza como veneno.",
+    "Aquí, en este mismo momento, hay una realidad alegre, clara y pacífica en la que puedes permanecer.",
+    "Cuando te conviertes en la imagen de tu propia imaginación, es lo más poderoso que podrías hacer.",
+    "Cuando ocurra algo malo, mantén la calma, respira hondo varias veces y cambia el enfoque a algo positivo.",
+    "Es el hombre que avanza con cuidado paso a paso ... quien está obligado a tener éxito en el mayor grado posible.",
+    "En mi opinión, es mucho mejor entender el universo tal como es que persistir en el engaño, a pesar de que éste sea confortable.",
+    "Uno no hace preguntas sobre los milagros, o se queja de que no están construidos a la perfección.",
+    "Se dice que no hay tal cosa como un almuerzo gratis. Pero el universo es el mejor almuerzo gratis.",
+    "El objetivo real y legítimo de las ciencias es la dotación de la vida humana con nuevos productos.",
+    "Siempre recuerde a las personas que lo ayudaron en el camino, y no olvide levantar a alguien.",
+    "Todo cambió el día que descubrió que había suficiente tiempo para las cosas importantes de su vida.",
+    "Es mucho, mucho mejor tener un ancla firme en la tontería que navegar en los mares turbulentos del pensamiento.",
+    "Puedes pasar toda tu vida recolectando días, y ninguno compensará el que deseas tener de vuelta.",
+    "Cuánto puedes aprender cuando fallas determina qué tan lejos llegarás para alcanzar tus metas.",
+    "Cuando te des cuenta de lo perfecto que es todo, inclinarás la cabeza hacia atrás y te reirás del cielo.",
+    "He vivido para saber que el secreto de la felicidad es nunca permitir que tus energías se estanquen.",
+    "Desde el momento en que tomé tu libro hasta que lo dejé, me convulsioné de la risa. Algún día pienso leerlo.",
+    "Pero es mucho, mucho tiempo De mayo a diciembre; Y los días se acortan cuando llegas a septiembre.",
+    "Los franceses dicen que tienes hambre cuando comes y yo me inspiro cuando trabajo. es mi motor",
+    "Solo queda un día, siempre comenzando de nuevo: se nos da al amanecer y se nos quita al anochecer.",
+    "Todas las ciencias son vanas y llenas de errores que no nacen de la Experiencia, madre de todo Saber.",
+    "La mayoría de las personas pierden la oportunidad porque está vestida con un mono y parece trabajo.",
+    "Recuerda siempre a las personas que te han ayudado en el camino, y no olvides levantar a alguien.",
+    "Lo que te digas a ti mismo, en silencio o en voz alta, le dice a tu cerebro en qué enfocarte. ¡Sencillo!",
+    "Cuando tu vida esté en crisis y no estés seguro de qué hacer, mira en lo más profundo de tu alma y te guiará.",
+    "El artista pensó que le habían robado su pintura favorita, pero era solo un pigmento de su imaginación.",
+    "Puede que nunca sepas los resultados de tus acciones, pero si no haces nada, no habrá resultados.",
+    "Por supuesto que hay aprendizaje sin enseñar. Es comúnmente referido por otro nombre: ciencia.",
+    "Un hombre fue declarado culpable de abusar de las comas. El juez le advirtió que esperara una sentencia muy larga."]
+    
+    var randomquote = quotes[Math.floor(Math.random()*quotes.length)].toLowerCase().replace(/[^a-z-á-é-í-ó-ú-ü- ]/g, "")
+    randomquote = randomquote.normalize("NFD").replace(/[\u0300-\u036f]/g, "")
+    console.log(randomquote)
+    
+    var letters = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"]
+    const alphabet = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"]
+    var replacement = []
+    for (let i=0; i<26; i++){
+        var rand = Math.floor(Math.random()*letters.length)
+        if (letters[rand] == alphabet[i]) {
+          while (letters[rand] == alphabet[i]) {
+              rand = Math.floor(Math.random()*letters.length)
+          }
+        }
+        replacement.push(letters[rand])
+        letters.splice(rand, 1, "")
+        letters = letters.join("")
+        letters = letters.split("")
+    }
+    console.log(replacement)
+    ciphertext = []
+    for (let i=0; i<randomquote.length; i++) {
+      if (randomquote[i] != " ") {
+        ciphertext.push(replacement[alphabet.indexOf(randomquote[i])])
+      }
+      else {
+        ciphertext.push(" ")
+      }
+    }
+    ciphertext = ciphertext.join("")
+    console.log(ciphertext)
+
+    counts = {}
+    for (const num of ciphertext) {
+      counts[num] = counts[num] ? counts[num] + 1 : 1;
+    }
+    var display = [`<table>
+          <tr><td>Quote: </td>
+          </tr><tr><td>Answer: </td>
+          </tr><tr><td>Frequency:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+          </tr></table>`]
+    for (let l=0; l<ciphertext.length; l++) {
+        if (ciphertext[l] != " ") {
+          display.push(`<table>
+          <tr><td>${ciphertext[l]}</td>
+          </tr><tr><td><input size="1" id= "${l}" place= "display"></td>
+          </tr><tr><td>${counts[ciphertext[l]]}</td>
+          </tr></table>`)
+        }
+        else {
+          display.push(`<table>
+          <tr><td>${ciphertext[l]}</td>
+          </tr><tr><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+          </tr><tr><td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+          </tr></table>`)
+        }
+    }
+    document.getElementById("quote").innerHTML = display.join("")
+
+    var time = 0
+    function timer() {
+        time += 1
+        return time
+    }
+    var answer = []
+    document.addEventListener ("keyup", (event) => {
+            var el = document.activeElement
+            console.log(Number(el.id))
+              if (event.key >= "a" && event.key <= "z") {
+                  el.value = event.key
+                  if (Number(el.id) != ciphertext.length-1 && randomquote[(Number(el.id)+1)] != " ") {
+                      document.getElementById(Number(el.id)+1).focus()
+                  }
+                  else if (Number(el.id) != ciphertext.length-1 && randomquote[(Number(el.id)+1)] == " ") {
+                      document.getElementById(Number(el.id)+2).focus()
+                  }
+              }
+    })
+    
+    function checkanswer() {
+        for (let i=0; i<ciphertext.length; i++) {
+          if (randomquote[i] != " ") {
+            answer.push(document.getElementById(i).value)
+          }
+        }
+        answer = answer.join("").toLowerCase().replace(/[^a-z]/g, "");
+        console.log(answer)
+        if (answer == randomquote.replace(/[ ]/g, "")) {
+        alert("Correct \nYour time was " + time + " seconds")
+        }
+        else {
+        alert("      dumb ahh");
+        }
+    }
+    setInterval(timer, 1000);
+</script>

@@ -1,0 +1,213 @@
+<link rel="stylesheet" href="coder.min.css" media="screen" />
+<style>
+  table td{
+    border: 0px solid white;
+    border-spacing:none;
+  }
+  td {
+    padding:.5rem;
+  }
+  table {
+    display: inline;
+  }
+</style>
+<nav class="navigation">
+    <a class="navigation-title">
+      Codebusters
+    </a>
+    <input type="checkbox" id="menu-toggle" />
+    <label class="menu-button float-right" for="menu-toggle"><i class="fas fa-bars"></i></label>
+    <ul class="navigation-list">
+          <li class="navigation-item">
+            <a class="navigation-link" href="https://yellowmamba335.github.io/Codebusters/">Complete Columnar</a>
+          </li>
+          <li class="navigation-item">
+            <a class="navigation-link" href="#">Hill</a>
+          </li>
+          <li class="navigation-item">
+            <a class="navigation-link" href="#">Porta</a>
+          </li>
+          <li class="navigation-item">
+            <a class="navigation-link" href="#">Baconian</a>
+          </li>
+          <li class="navigation-item">
+            <a class="navigation-link" href="#">Fractionated Morse</a>
+          </li>
+          <li class="navigation-item">
+            <a class="navigation-link" href="#">Cryptarithm</a>
+          </li>
+    </ul>
+</nav>
+
+<div id="key"></div><br>
+<div id="tables"></div>
+<button onclick=checkanswer()>Check</button>
+
+<script>
+    var keywordlist = ["rent","snap","lend","lost","roll","story","cabin","admit","yearn","decay","mobile","factor","demand","happen","throne","skibidi"]
+    var key = keywordlist[Math.floor(Math.random()*16)]
+    document.getElementById("key").innerHTML = "The following is encrypted with the key " + key
+
+    var quotes = ['#3 pencils and quadrille pads.', "There ain't no journey what don't change you some.", "A champion is someone who gets up when he can't.", 'A friendship that can end never really began.', 'A goal without a plan is just a wish.', 'A library is more precious than a bank.', 'A library is thought in cold storage.', 'A little rebellion now and then is a good thing.', 'A man is known by the books he reads.', 'A Penny Saved is a Penny Earned', 'A positive change in approach improves quality.', "A proverb is one man's wit and all men's wisdom.", 'A true friend is the best Possession.', 'A witty saying proves nothing.', 'Acquiring knowledge is a form of imitation.', 'Act as if what you do makes a difference. It does.', 'Action is the universal language of success.', 'Aim higher in case you fall short.', 'All art is but dirtying the paper delicately.', "All feedback is relevant, even if it's not true.", 'All knowledge is worth having.', "All the fun's in how you say a thing.", 'Always do what you are afraid to do.', 'Anything can happen in life, especially nothing.', 'Anything worthy is worth the fight!', 'As long as one keeps searching, the answers come.', 'As to the Adjective: when in doubt, strike it out.', "Awake, arise or be for ever fall'n.", 'Baking is both an art and a science.', 'Be humble: have the courage to speak the truth.', "Be so good they can't ignore you.", 'Be willing to be a beginner every single morning.', 'Believe and act as if it were impossible to fail.', 'Books are a uniquely portable magic.', 'Boredom can be a lethal thing on a small island.', 'But how could you live and have no story to tell?', 'But still try for who knows what is possible!', 'But the cure for most obstacles is, Be decisive.', 'But to us, probability is the very guide of life.', "But what is life if you don't live it?", 'Change your perspective and change your life', 'Complex question can only be solved by patience.', 'Conflicts have small beginnings.', 'Discontent is the first necessity of progress.', 'Distrust any enterprise that requires new clothes.', "Don't act your role, be yourself.", "Don't just listen understand it.", "Don't just wish for success, earn it!", "Don't spell part backwards. It's a trap.", "Don't try to fix me, I'm not broken...", 'Even a child is known by his doings.', 'Even a trillion dollars is made up of cents.', 'Even strength must bow to wisdom sometimes.', 'Every moment of light and dark is a miracle.', 'Everyday, give yourself a good mental shampoo.', 'Find a purpose to serve, not a lifestyle to live.', 'For every fact there is an infinity of hypotheses.', 'From a small seed a mighty trunk may grow.', "Give me a museum and I'll fill it.", 'Go as far as you can see and you will see further.', 'Going back to something is harder than you think.', 'Great leaders create more leaders, not followers.', 'Happiness cannot be pursued; it must ensue.', 'Happiness equals reality minus expectations.', 'Happiness is answering your calling.', 'Hardships make or break people.', 'He who can have patience can have what he will.', 'He who speaks without an attentive ear is mute.', 'Helpfulness is the enemy of greed', "History doesn't repeat itself, it just stutters.", 'Humor is also a way of saying something serious.', 'I am not omniscient, but I know a lot.', 'I do not fear computers. I fear the lack of them.', 'I have a shocking memory - I remember everything.', 'I have nothing to declare except my genius.', 'I have stitched life into me like a rare organ', 'I know certain truths about life.', 'I know nothing except the fact of my ignorance.', 'I only know that I know nothing', 'I think that success is having fun.', "I think therefore I can't get anything done.", "I was willing to accept what I couldn't change.", 'I wonder if you can refuse to inherit the world.', 'I worship the quicksand he walks in.', "I'd learned that some things are best kept secret.", 'Ideas shape the course of history.', 'If a person is not free, his right is restricted.', 'If I can do it, you can do it. Anybody can.', 'If obstacles are large, jump higher.', "If you can't win by reason, go for volume.", "If you don't laugh, you'll cry.", 'If you read good books, you will be well-informed.', 'If you surrendered to the air, you could ride it.', 'If you want to find happiness, find gratitude.', "I'm not stubborn. My way is just better.", "I'm so optimistic my blood type is B Positive", 'Imitation is the sincerest form of television.', 'In chaos is where learning happens the most.', 'In order to fail, you must try first.', 'In the absence of vision, there are nightmares.', 'Instead of cursing the darkness, light a candle.', 'Invest your energy in the things you can control.', 'It is not the mountain we conquer but ourselves.', "It's easy to forget things you don't need anymore.", "I've got nothing to do today but smile.", 'Just a grain can bring a bird down from the skies.', 'Just be yourself, there is no one better.', "Just think. We're whizzing through the universe.", "Know what you're talking about.", 'Knowing it and seeing it are two different things.', 'Knowledge is in the end based on acknowledgement.', 'Knowledge is more than equivalent to force.', 'Knowledge is power as well as fame.', 'Knowledge not shared remains unknown', 'Knowledge will help you to solve any problem', 'Knowledge without action is empty as a shadow.', 'Leaders prioritize what they want.', 'Leadership is developed daily, not in a day.', 'life is a continous journey of transformation', 'Life is a journey worth making.', 'Life is either daring adventure or nothing.', 'Life is like a box of chocolates.', 'Life is more fun if you play games.', 'Light generates life and causes it to grow.', 'living is more than just a pulse', 'Love is the absence of judgment.', "Luck is believing you're lucky.", "Magic's just science that we don't understand yet.", 'Make your success a habit not just an act of whim.', 'Making comparisons can spoil your happiness.', 'Math is my Passion. Engineering is my Profession.', 'Math puns are the first sine of madness!', 'May success knock your door always', 'Mirrors should think longer before they reflect.', 'Money talks ...but all mine ever says is good-bye.', 'Morning will come, it has no choice.', "Mother Nature doesn't care if you're having fun.", 'Never confuse belief with knowledge.', 'Never fire a laser at a mirror.', 'Never regret anything that made you smile.', 'Never ruin an apology with an excuse.', 'Never was anything great achieved without danger.', 'No masterpiece was ever created by a lazy artist.', 'No sanction can stand against ignited minds.', "Not on one strand are all life's jewels strung.", "Nothing is fun until you're good at it.", 'Nothing succeeds like indifference to success.', 'Of all things, I liked books best.', "OK, so what's the speed of dark ?", 'On the other hand, you have different fingers.', "Once I get on a puzzle, I can't get off.", 'Once we accept our limits, we go beyond them.', 'One can never have enough socks', 'One lives in the hope of becoming a memory.', 'Only through knowing could a person become strong.', "Opportunities don't happen, you create them.", 'Or, rather, let us be more simple and less vain.', 'Our lives are just a journey back to THE LIGHT', 'Our true mentor in life is science.', 'Peace begins when expectations end.', 'People are sheep. TV is the shepherd.', 'Perfection is an undiscovered jewel.', 'Prosperity makes some friends and many enemies.', 'Quality is all about taking care of the details.', 'Quantum Mechanics: The stuff dreams are made of.', 'Quiet people have the loudest minds.', 'Reading a book is like re-writing it for yourself.', 'Rejection is an opportunity for your selection.', "Rockets are cool. There's no getting around that.", "Science doesn't take sides, does it?", 'Science is based not on faith but in skeptism', 'Science is only a Latin word for knowledge', 'Science is organized knowledge.', 'Science is the poetry of reality.', 'Search for the good ways. And walk in right path.', 'Show me a hero and I will write you a tragedy.', 'Smile suppress worries as Rose suppress thorns.', 'Snoring keeps the monsters away.', 'Some people feel the rain. Others just get wet.', 'Some say life is the thing, but I prefer reading.', 'Something deeply hidden had to be behind things.', 'Somewhere, the zebra is dancing.', "Spend the afternoon, you can't take it with you.", 'State first, subject second, statesman last.', 'Statistics are no substitute for judgment.', 'Stories, knowledge...they set the mind alight.', 'Storms make trees take deeper roots.', 'Strangers are just friends waiting to happen.', 'Success is a decision, not a gift.', 'Success without happiness is a mirage of life.', 'The beautiful is always bizarre.', 'The best substitute for brains is silence.', "The book you don't read won't help.", 'The deeper a thing is, the more interesting it is', 'The earliest fisherman catches the fattest fish.', 'The easiest way to do anything is properly.', 'The energy of the mind is the essence of life.', 'The function of freedom is to free someone else.', 'The gods too are fond of a joke.', 'The grand thing is to be able to reason backwards.', 'The greatest ideas are the simplest.', 'The history of art is the history of revivals.', 'The important thing is not to stop questioning.', 'The joy of a spirit is the measure of its power.', 'The more thou search, the more thou shall marvel.', 'The only joy in the world is to begin.', 'The only real valuable thing is intuition.', 'The perfect is the enemy of the good.', "The physicist's greatest tool is his wastebasket.", 'The possibility of the dream gives strength.', 'The present is a point just passed.', 'The purpose of fun is to live it.', 'The real mystery is the known, not the unknown.', 'The reward of a thing well done is having done it.', 'The secret to success is constancy of purpose.', 'The smaller the creature, the bolder its spirit.', 'The solar system consists of Jupiter plus debris.', 'The sprint is like life ... blink and you miss it.', 'The universe is made of stories, not of atoms.', 'The way a person stands may disguise who they are.', 'The wishbone will never replace the backbone', 'The world is a stage and the play is badly cast.', 'The years teach much which the days never know.', 'There are no traffic jams on the extra mile.', 'There is no success where there are no secrets.', 'There was, I found, always more to learn.', 'Think before you speak. Read before you think.', 'This book fills a much-needed gap.', "Those who don't jump will never fly.", 'Those who hurt others will also hurt themselves.', 'Time flies over us, but leaves its shadow behind.', 'Time is not made of atoms to manipulate it back.', 'Time plays a major role in achieving success', 'Tis an ill cook that cannot lick his own fingers.', 'To be a success, think of happiness.', 'To be fond of learning is near to wisdom.', 'To be noble, help others to succeed', 'To be too knowing is a downfall.', 'To listen be silent, to succeed be persistent', 'To those who will see, the world waits.', 'Too low they build, who build beneath the stars.', 'Too many locks, not enough keys.', "Torture numbers, and they'll confess to anything.", 'Travel far enough, you meet yourself.', "Turns out even NASA can't improve on duct tape.", "Unbeing dead isn't being alive.", 'Universe consists of frozen light.', 'Victory only comes through wear and tear.', 'Vision is your first creation of the future.', 'War is never a lasting solution for any problem.', 'We have art to save ourselves from the truth.', 'We learn and grow Always building on what we know', 'We made too many wrong mistakes.', 'We must be the change we wish to see in the world.', 'We must work while we have strength.', 'Well done is better than well said.', "We're going to turn this team around 360 degrees.", 'What did the vegan say? I made a big missed steak.', "What dog can't bark? A hot dog.", 'What is a rebel? A man who says no.', "What is an alien's favorite candy? A Mars bar!", 'What we see depends mainly on what we look for.', "What's a horse's favorite sport? Stable Tennis.", "What's meant to be will always find a way", 'When we are centered in joy, we attain our wisdom.', 'When you develop yourself, you grow humanity.', 'Where is human nature so weak as in the bookstore?', 'Where there is unity there is always victory.', 'Who can count the sand by the sea?', 'Who says life is fair, where is that written?', "Why don't you light that candle ?", "Why don't you write books people can read?", "Win or lose, you are trying, that's what matters.", 'Wisdom is the daughter of experience.', 'Wit is the only wall between us and the dark.', 'With time involved, everything is temporary.', 'Without knowledge, we are weak.', 'Without music, life would be a blank to me.', 'Wonder is the seed of knowledge', "Words may show a man's wit, actions his meaning.", 'Yell codebusters rule for a hundred extra points', 'You are worth about 3 dollars worth in chemicals.', 'You can do anything you set your mind to', 'You can know a lot and still be stupid.', 'You cannot predict the future.', "You can't have everything. Where would you put it?", "You fall at times and that's how you learn.", 'You get what anybody gets - you get a lifetime.', 'You live but once; you might as well be amusing.', 'You may delay, but time will not.', 'You rush a miracle worker, you get lousy miracles!', 'You were born to stand out, stop trying to fit in.', "You'll never find a rainbow if you're looking down", 'Your daily product determines how far you go']
+    var randomquote = quotes[Math.floor(Math.random()*quotes.length)].toLowerCase().replace(/[^a-z]/g, "")
+    console.log(randomquote)
+    console.log(randomquote.length)
+    console.log(Math.floor(randomquote.length/key.length))
+    var keystring = []
+    for (let j=0; j<Math.floor(randomquote.length/key.length); j++) {
+        keystring.push(key)
+    }
+
+    var length = randomquote.length % key.length
+    
+    for (let k=0; k<length; k++) {
+        keystring.push(key[k])
+    }
+
+    keystring = keystring.join("")
+    console.log(keystring)
+
+    var ciphertext = []
+    
+    for (let i=0; i<randomquote.length; i++) {
+       if (((keystring[i]=="a"||keystring[i]=="b")&&randomquote[i]=="n")||((keystring[i]=="c"||keystring[i]=="d")&&randomquote[i]=="o")||((keystring[i]=="e"||keystring[i]=="f")&&randomquote[i]=="p")||((keystring[i]=="g"||keystring[i]=="h")&&randomquote[i]=="q")||((keystring[i]=="i"||keystring[i]=="j")&&randomquote[i]=="r")||((keystring[i]=="k"||keystring[i]=="l")&&randomquote[i]=="s")||((keystring[i]=="m"||keystring[i]=="n")&&randomquote[i]=="t")||((keystring[i]=="o"||keystring[i]=="p")&&randomquote[i]=="u")||((keystring[i]=="q"||keystring[i]=="r")&&randomquote[i]=="v")||((keystring[i]=="s"||keystring[i]=="t")&&randomquote[i]=="w")||((keystring[i]=="u"||keystring[i]=="v")&&randomquote[i]=="x")||((keystring[i]=="w"||keystring[i]=="x")&&randomquote[i]=="y")||((keystring[i]=="y"||keystring[i]=="z")&&randomquote[i]=="z")) {
+        ciphertext.push("a")
+       }
+       else if (((keystring[i]=="a"||keystring[i]=="b")&&randomquote[i]=="o")||((keystring[i]=="c"||keystring[i]=="d")&&randomquote[i]=="p")||((keystring[i]=="e"||keystring[i]=="f")&&randomquote[i]=="q")||((keystring[i]=="g"||keystring[i]=="h")&&randomquote[i]=="r")||((keystring[i]=="i"||keystring[i]=="j")&&randomquote[i]=="s")||((keystring[i]=="k"||keystring[i]=="l")&&randomquote[i]=="t")||((keystring[i]=="m"||keystring[i]=="n")&&randomquote[i]=="u")||((keystring[i]=="o"||keystring[i]=="p")&&randomquote[i]=="v")||((keystring[i]=="q"||keystring[i]=="r")&&randomquote[i]=="w")||((keystring[i]=="s"||keystring[i]=="t")&&randomquote[i]=="x")||((keystring[i]=="u"||keystring[i]=="v")&&randomquote[i]=="y")||((keystring[i]=="w"||keystring[i]=="x")&&randomquote[i]=="z")||((keystring[i]=="y"||keystring[i]=="n")&&randomquote[i]=="z")) {
+        ciphertext.push("b")
+       }
+       else if (((keystring[i]=="a"||keystring[i]=="b")&&randomquote[i]=="p")||((keystring[i]=="c"||keystring[i]=="d")&&randomquote[i]=="q")||((keystring[i]=="e"||keystring[i]=="f")&&randomquote[i]=="r")||((keystring[i]=="g"||keystring[i]=="h")&&randomquote[i]=="s")||((keystring[i]=="i"||keystring[i]=="j")&&randomquote[i]=="t")||((keystring[i]=="k"||keystring[i]=="l")&&randomquote[i]=="u")||((keystring[i]=="m"||keystring[i]=="n")&&randomquote[i]=="v")||((keystring[i]=="o"||keystring[i]=="p")&&randomquote[i]=="w")||((keystring[i]=="q"||keystring[i]=="r")&&randomquote[i]=="x")||((keystring[i]=="s"||keystring[i]=="t")&&randomquote[i]=="y")||((keystring[i]=="u"||keystring[i]=="v")&&randomquote[i]=="z")||((keystring[i]=="w"||keystring[i]=="x")&&randomquote[i]=="y")||((keystring[i]=="n"||keystring[i]=="z")&&randomquote[i]=="o")) {
+        ciphertext.push("c")
+       }
+       else if (((keystring[i]=="a"||keystring[i]=="b")&&randomquote[i]=="q")||((keystring[i]=="c"||keystring[i]=="d")&&randomquote[i]=="r")||((keystring[i]=="e"||keystring[i]=="f")&&randomquote[i]=="s")||((keystring[i]=="g"||keystring[i]=="h")&&randomquote[i]=="t")||((keystring[i]=="i"||keystring[i]=="j")&&randomquote[i]=="u")||((keystring[i]=="k"||keystring[i]=="l")&&randomquote[i]=="v")||((keystring[i]=="m"||keystring[i]=="n")&&randomquote[i]=="w")||((keystring[i]=="o"||keystring[i]=="p")&&randomquote[i]=="x")||((keystring[i]=="q"||keystring[i]=="r")&&randomquote[i]=="y")||((keystring[i]=="s"||keystring[i]=="t")&&randomquote[i]=="z")||((keystring[i]=="u"||keystring[i]=="v")&&randomquote[i]=="n")||((keystring[i]=="w"||keystring[i]=="x")&&randomquote[i]=="o")||((keystring[i]=="y"||keystring[i]=="z")&&randomquote[i]=="p")) {
+        ciphertext.push("d")
+       }
+       else if (((keystring[i]=="a"||keystring[i]=="b")&&randomquote[i]=="r")||((keystring[i]=="c"||keystring[i]=="d")&&randomquote[i]=="s")||((keystring[i]=="e"||keystring[i]=="f")&&randomquote[i]=="t")||((keystring[i]=="g"||keystring[i]=="h")&&randomquote[i]=="u")||((keystring[i]=="i"||keystring[i]=="j")&&randomquote[i]=="v")||((keystring[i]=="k"||keystring[i]=="l")&&randomquote[i]=="w")||((keystring[i]=="m"||keystring[i]=="n")&&randomquote[i]=="x")||((keystring[i]=="o"||keystring[i]=="p")&&randomquote[i]=="y")||((keystring[i]=="q"||keystring[i]=="r")&&randomquote[i]=="z")||((keystring[i]=="s"||keystring[i]=="t")&&randomquote[i]=="n")||((keystring[i]=="u"||keystring[i]=="v")&&randomquote[i]=="o")||((keystring[i]=="w"||keystring[i]=="x")&&randomquote[i]=="p")||((keystring[i]=="y"||keystring[i]=="z")&&randomquote[i]=="q")) {
+        ciphertext.push("e")
+       }
+       else if (((keystring[i]=="a"||keystring[i]=="b")&&randomquote[i]=="s")||((keystring[i]=="c"||keystring[i]=="d")&&randomquote[i]=="t")||((keystring[i]=="e"||keystring[i]=="f")&&randomquote[i]=="u")||((keystring[i]=="g"||keystring[i]=="h")&&randomquote[i]=="v")||((keystring[i]=="i"||keystring[i]=="j")&&randomquote[i]=="w")||((keystring[i]=="k"||keystring[i]=="l")&&randomquote[i]=="x")||((keystring[i]=="m"||keystring[i]=="n")&&randomquote[i]=="y")||((keystring[i]=="o"||keystring[i]=="p")&&randomquote[i]=="z")||((keystring[i]=="q"||keystring[i]=="r")&&randomquote[i]=="n")||((keystring[i]=="s"||keystring[i]=="t")&&randomquote[i]=="o")||((keystring[i]=="u"||keystring[i]=="v")&&randomquote[i]=="p")||((keystring[i]=="w"||keystring[i]=="x")&&randomquote[i]=="q")||((keystring[i]=="y"||keystring[i]=="z")&&randomquote[i]=="r")) {
+        ciphertext.push("f")
+       }
+       else if (((keystring[i]=="a"||keystring[i]=="b")&&randomquote[i]=="t")||((keystring[i]=="c"||keystring[i]=="d")&&randomquote[i]=="u")||((keystring[i]=="e"||keystring[i]=="f")&&randomquote[i]=="v")||((keystring[i]=="g"||keystring[i]=="h")&&randomquote[i]=="w")||((keystring[i]=="i"||keystring[i]=="j")&&randomquote[i]=="x")||((keystring[i]=="k"||keystring[i]=="l")&&randomquote[i]=="y")||((keystring[i]=="m"||keystring[i]=="n")&&randomquote[i]=="z")||((keystring[i]=="o"||keystring[i]=="p")&&randomquote[i]=="n")||((keystring[i]=="q"||keystring[i]=="r")&&randomquote[i]=="o")||((keystring[i]=="s"||keystring[i]=="t")&&randomquote[i]=="p")||((keystring[i]=="u"||keystring[i]=="v")&&randomquote[i]=="q")||((keystring[i]=="w"||keystring[i]=="x")&&randomquote[i]=="r")||((keystring[i]=="y"||keystring[i]=="z")&&randomquote[i]=="s")) {
+        ciphertext.push("g")
+       }
+       else if (((keystring[i]=="a"||keystring[i]=="b")&&randomquote[i]=="u")||((keystring[i]=="c"||keystring[i]=="d")&&randomquote[i]=="v")||((keystring[i]=="e"||keystring[i]=="f")&&randomquote[i]=="w")||((keystring[i]=="g"||keystring[i]=="h")&&randomquote[i]=="x")||((keystring[i]=="i"||keystring[i]=="j")&&randomquote[i]=="y")||((keystring[i]=="k"||keystring[i]=="l")&&randomquote[i]=="z")||((keystring[i]=="m"||keystring[i]=="n")&&randomquote[i]=="n")||((keystring[i]=="o"||keystring[i]=="p")&&randomquote[i]=="o")||((keystring[i]=="q"||keystring[i]=="r")&&randomquote[i]=="p")||((keystring[i]=="s"||keystring[i]=="t")&&randomquote[i]=="q")||((keystring[i]=="u"||keystring[i]=="v")&&randomquote[i]=="r")||((keystring[i]=="w"||keystring[i]=="x")&&randomquote[i]=="s")||((keystring[i]=="y"||keystring[i]=="z")&&randomquote[i]=="t")) {
+        ciphertext.push("h")
+       }
+       else if (((keystring[i]=="a"||keystring[i]=="b")&&randomquote[i]=="v")||((keystring[i]=="c"||keystring[i]=="d")&&randomquote[i]=="w")||((keystring[i]=="e"||keystring[i]=="f")&&randomquote[i]=="x")||((keystring[i]=="g"||keystring[i]=="h")&&randomquote[i]=="y")||((keystring[i]=="i"||keystring[i]=="j")&&randomquote[i]=="z")||((keystring[i]=="k"||keystring[i]=="l")&&randomquote[i]=="n")||((keystring[i]=="m"||keystring[i]=="n")&&randomquote[i]=="o")||((keystring[i]=="o"||keystring[i]=="p")&&randomquote[i]=="p")||((keystring[i]=="q"||keystring[i]=="r")&&randomquote[i]=="q")||((keystring[i]=="s"||keystring[i]=="t")&&randomquote[i]=="r")||((keystring[i]=="u"||keystring[i]=="v")&&randomquote[i]=="s")||((keystring[i]=="w"||keystring[i]=="x")&&randomquote[i]=="t")||((keystring[i]=="y"||keystring[i]=="z")&&randomquote[i]=="u")) {
+        ciphertext.push("i")
+       }
+       else if (((keystring[i]=="a"||keystring[i]=="b")&&randomquote[i]=="w")||((keystring[i]=="c"||keystring[i]=="d")&&randomquote[i]=="x")||((keystring[i]=="e"||keystring[i]=="f")&&randomquote[i]=="y")||((keystring[i]=="g"||keystring[i]=="h")&&randomquote[i]=="z")||((keystring[i]=="i"||keystring[i]=="j")&&randomquote[i]=="n")||((keystring[i]=="k"||keystring[i]=="l")&&randomquote[i]=="o")||((keystring[i]=="m"||keystring[i]=="n")&&randomquote[i]=="p")||((keystring[i]=="o"||keystring[i]=="p")&&randomquote[i]=="q")||((keystring[i]=="q"||keystring[i]=="r")&&randomquote[i]=="r")||((keystring[i]=="s"||keystring[i]=="t")&&randomquote[i]=="s")||((keystring[i]=="u"||keystring[i]=="v")&&randomquote[i]=="t")||((keystring[i]=="w"||keystring[i]=="x")&&randomquote[i]=="u")||((keystring[i]=="y"||keystring[i]=="z")&&randomquote[i]=="v")) {
+        ciphertext.push("j")
+       }
+       else if (((keystring[i]=="a"||keystring[i]=="b")&&randomquote[i]=="x")||((keystring[i]=="c"||keystring[i]=="d")&&randomquote[i]=="y")||((keystring[i]=="e"||keystring[i]=="f")&&randomquote[i]=="z")||((keystring[i]=="g"||keystring[i]=="h")&&randomquote[i]=="n")||((keystring[i]=="i"||keystring[i]=="j")&&randomquote[i]=="o")||((keystring[i]=="k"||keystring[i]=="l")&&randomquote[i]=="p")||((keystring[i]=="m"||keystring[i]=="n")&&randomquote[i]=="q")||((keystring[i]=="o"||keystring[i]=="p")&&randomquote[i]=="r")||((keystring[i]=="q"||keystring[i]=="r")&&randomquote[i]=="s")||((keystring[i]=="s"||keystring[i]=="t")&&randomquote[i]=="t")||((keystring[i]=="u"||keystring[i]=="v")&&randomquote[i]=="u")||((keystring[i]=="w"||keystring[i]=="x")&&randomquote[i]=="v")||((keystring[i]=="y"||keystring[i]=="z")&&randomquote[i]=="w")) {
+        ciphertext.push("k")
+       }
+       else if (((keystring[i]=="a"||keystring[i]=="b")&&randomquote[i]=="y")||((keystring[i]=="c"||keystring[i]=="d")&&randomquote[i]=="z")||((keystring[i]=="e"||keystring[i]=="f")&&randomquote[i]=="n")||((keystring[i]=="g"||keystring[i]=="h")&&randomquote[i]=="o")||((keystring[i]=="i"||keystring[i]=="j")&&randomquote[i]=="p")||((keystring[i]=="k"||keystring[i]=="l")&&randomquote[i]=="q")||((keystring[i]=="m"||keystring[i]=="n")&&randomquote[i]=="r")||((keystring[i]=="o"||keystring[i]=="p")&&randomquote[i]=="s")||((keystring[i]=="q"||keystring[i]=="r")&&randomquote[i]=="t")||((keystring[i]=="s"||keystring[i]=="t")&&randomquote[i]=="u")||((keystring[i]=="u"||keystring[i]=="v")&&randomquote[i]=="v")||((keystring[i]=="w"||keystring[i]=="x")&&randomquote[i]=="w")||((keystring[i]=="y"||keystring[i]=="z")&&randomquote[i]=="x")) {
+        ciphertext.push("l")
+       }
+       else if (((keystring[i]=="a"||keystring[i]=="b")&&randomquote[i]=="z")||((keystring[i]=="c"||keystring[i]=="d")&&randomquote[i]=="n")||((keystring[i]=="e"||keystring[i]=="f")&&randomquote[i]=="o")||((keystring[i]=="g"||keystring[i]=="h")&&randomquote[i]=="p")||((keystring[i]=="i"||keystring[i]=="j")&&randomquote[i]=="q")||((keystring[i]=="k"||keystring[i]=="l")&&randomquote[i]=="r")||((keystring[i]=="m"||keystring[i]=="n")&&randomquote[i]=="s")||((keystring[i]=="o"||keystring[i]=="p")&&randomquote[i]=="t")||((keystring[i]=="q"||keystring[i]=="r")&&randomquote[i]=="u")||((keystring[i]=="s"||keystring[i]=="t")&&randomquote[i]=="v")||((keystring[i]=="u"||keystring[i]=="v")&&randomquote[i]=="w")||((keystring[i]=="w"||keystring[i]=="x")&&randomquote[i]=="x")||((keystring[i]=="y"||keystring[i]=="z")&&randomquote[i]=="y")) {
+        ciphertext.push("m")
+       }
+       else if (((keystring[i]=="a"||keystring[i]=="b")&&randomquote[i]=="a")||((keystring[i]=="c"||keystring[i]=="d")&&randomquote[i]=="m")||((keystring[i]=="e"||keystring[i]=="f")&&randomquote[i]=="l")||((keystring[i]=="g"||keystring[i]=="h")&&randomquote[i]=="k")||((keystring[i]=="i"||keystring[i]=="j")&&randomquote[i]=="j")||((keystring[i]=="k"||keystring[i]=="l")&&randomquote[i]=="i")||((keystring[i]=="m"||keystring[i]=="n")&&randomquote[i]=="h")||((keystring[i]=="o"||keystring[i]=="p")&&randomquote[i]=="g")||((keystring[i]=="q"||keystring[i]=="r")&&randomquote[i]=="f")||((keystring[i]=="s"||keystring[i]=="t")&&randomquote[i]=="e")||((keystring[i]=="u"||keystring[i]=="v")&&randomquote[i]=="d")||((keystring[i]=="w"||keystring[i]=="x")&&randomquote[i]=="c")||((keystring[i]=="y"||keystring[i]=="z")&&randomquote[i]=="b")) {
+        ciphertext.push("n")
+       }
+       else if (((keystring[i]=="a"||keystring[i]=="b")&&randomquote[i]=="b")||((keystring[i]=="c"||keystring[i]=="d")&&randomquote[i]=="a")||((keystring[i]=="e"||keystring[i]=="f")&&randomquote[i]=="m")||((keystring[i]=="g"||keystring[i]=="h")&&randomquote[i]=="l")||((keystring[i]=="i"||keystring[i]=="j")&&randomquote[i]=="k")||((keystring[i]=="k"||keystring[i]=="l")&&randomquote[i]=="j")||((keystring[i]=="m"||keystring[i]=="n")&&randomquote[i]=="i")||((keystring[i]=="o"||keystring[i]=="p")&&randomquote[i]=="h")||((keystring[i]=="q"||keystring[i]=="r")&&randomquote[i]=="g")||((keystring[i]=="s"||keystring[i]=="t")&&randomquote[i]=="f")||((keystring[i]=="u"||keystring[i]=="v")&&randomquote[i]=="e")||((keystring[i]=="w"||keystring[i]=="x")&&randomquote[i]=="d")||((keystring[i]=="y"||keystring[i]=="z")&&randomquote[i]=="c")) {
+        ciphertext.push("o")
+       }
+       else if (((keystring[i]=="a"||keystring[i]=="b")&&randomquote[i]=="c")||((keystring[i]=="c"||keystring[i]=="d")&&randomquote[i]=="b")||((keystring[i]=="e"||keystring[i]=="f")&&randomquote[i]=="a")||((keystring[i]=="g"||keystring[i]=="h")&&randomquote[i]=="m")||((keystring[i]=="i"||keystring[i]=="j")&&randomquote[i]=="l")||((keystring[i]=="k"||keystring[i]=="l")&&randomquote[i]=="k")||((keystring[i]=="m"||keystring[i]=="n")&&randomquote[i]=="j")||((keystring[i]=="o"||keystring[i]=="p")&&randomquote[i]=="i")||((keystring[i]=="q"||keystring[i]=="r")&&randomquote[i]=="h")||((keystring[i]=="s"||keystring[i]=="t")&&randomquote[i]=="g")||((keystring[i]=="u"||keystring[i]=="v")&&randomquote[i]=="f")||((keystring[i]=="w"||keystring[i]=="x")&&randomquote[i]=="e")||((keystring[i]=="y"||keystring[i]=="z")&&randomquote[i]=="d")) {
+        ciphertext.push("p")
+       }
+       else if (((keystring[i]=="a"||keystring[i]=="b")&&randomquote[i]=="d")||((keystring[i]=="c"||keystring[i]=="d")&&randomquote[i]=="c")||((keystring[i]=="e"||keystring[i]=="f")&&randomquote[i]=="b")||((keystring[i]=="g"||keystring[i]=="h")&&randomquote[i]=="a")||((keystring[i]=="i"||keystring[i]=="j")&&randomquote[i]=="m")||((keystring[i]=="k"||keystring[i]=="l")&&randomquote[i]=="l")||((keystring[i]=="m"||keystring[i]=="n")&&randomquote[i]=="k")||((keystring[i]=="o"||keystring[i]=="p")&&randomquote[i]=="j")||((keystring[i]=="q"||keystring[i]=="r")&&randomquote[i]=="i")||((keystring[i]=="s"||keystring[i]=="t")&&randomquote[i]=="h")||((keystring[i]=="u"||keystring[i]=="v")&&randomquote[i]=="g")||((keystring[i]=="w"||keystring[i]=="x")&&randomquote[i]=="f")||((keystring[i]=="y"||keystring[i]=="z")&&randomquote[i]=="e")) {
+        ciphertext.push("q")
+       }
+       else if (((keystring[i]=="a"||keystring[i]=="b")&&randomquote[i]=="e")||((keystring[i]=="c"||keystring[i]=="d")&&randomquote[i]=="d")||((keystring[i]=="e"||keystring[i]=="f")&&randomquote[i]=="c")||((keystring[i]=="g"||keystring[i]=="h")&&randomquote[i]=="b")||((keystring[i]=="i"||keystring[i]=="j")&&randomquote[i]=="a")||((keystring[i]=="k"||keystring[i]=="l")&&randomquote[i]=="m")||((keystring[i]=="m"||keystring[i]=="n")&&randomquote[i]=="l")||((keystring[i]=="o"||keystring[i]=="p")&&randomquote[i]=="k")||((keystring[i]=="q"||keystring[i]=="r")&&randomquote[i]=="j")||((keystring[i]=="s"||keystring[i]=="t")&&randomquote[i]=="i")||((keystring[i]=="u"||keystring[i]=="v")&&randomquote[i]=="h")||((keystring[i]=="w"||keystring[i]=="x")&&randomquote[i]=="g")||((keystring[i]=="y"||keystring[i]=="z")&&randomquote[i]=="f")) {
+        ciphertext.push("r")
+       }
+       else if (((keystring[i]=="a"||keystring[i]=="b")&&randomquote[i]=="f")||((keystring[i]=="c"||keystring[i]=="d")&&randomquote[i]=="e")||((keystring[i]=="e"||keystring[i]=="f")&&randomquote[i]=="d")||((keystring[i]=="g"||keystring[i]=="h")&&randomquote[i]=="c")||((keystring[i]=="i"||keystring[i]=="j")&&randomquote[i]=="b")||((keystring[i]=="k"||keystring[i]=="l")&&randomquote[i]=="a")||((keystring[i]=="m"||keystring[i]=="n")&&randomquote[i]=="m")||((keystring[i]=="o"||keystring[i]=="p")&&randomquote[i]=="l")||((keystring[i]=="q"||keystring[i]=="r")&&randomquote[i]=="k")||((keystring[i]=="s"||keystring[i]=="t")&&randomquote[i]=="j")||((keystring[i]=="u"||keystring[i]=="v")&&randomquote[i]=="i")||((keystring[i]=="w"||keystring[i]=="x")&&randomquote[i]=="h")||((keystring[i]=="y"||keystring[i]=="z")&&randomquote[i]=="g")) {
+        ciphertext.push("s")
+       }
+       else if (((keystring[i]=="a"||keystring[i]=="b")&&randomquote[i]=="g")||((keystring[i]=="c"||keystring[i]=="d")&&randomquote[i]=="f")||((keystring[i]=="e"||keystring[i]=="f")&&randomquote[i]=="e")||((keystring[i]=="g"||keystring[i]=="h")&&randomquote[i]=="d")||((keystring[i]=="i"||keystring[i]=="j")&&randomquote[i]=="c")||((keystring[i]=="k"||keystring[i]=="l")&&randomquote[i]=="b")||((keystring[i]=="m"||keystring[i]=="n")&&randomquote[i]=="a")||((keystring[i]=="o"||keystring[i]=="p")&&randomquote[i]=="m")||((keystring[i]=="q"||keystring[i]=="r")&&randomquote[i]=="l")||((keystring[i]=="s"||keystring[i]=="t")&&randomquote[i]=="k")||((keystring[i]=="u"||keystring[i]=="v")&&randomquote[i]=="j")||((keystring[i]=="w"||keystring[i]=="x")&&randomquote[i]=="i")||((keystring[i]=="y"||keystring[i]=="z")&&randomquote[i]=="h")) {
+        ciphertext.push("t")
+       }
+       else if (((keystring[i]=="a"||keystring[i]=="b")&&randomquote[i]=="h")||((keystring[i]=="c"||keystring[i]=="d")&&randomquote[i]=="g")||((keystring[i]=="e"||keystring[i]=="f")&&randomquote[i]=="f")||((keystring[i]=="g"||keystring[i]=="h")&&randomquote[i]=="e")||((keystring[i]=="i"||keystring[i]=="j")&&randomquote[i]=="d")||((keystring[i]=="k"||keystring[i]=="l")&&randomquote[i]=="c")||((keystring[i]=="m"||keystring[i]=="n")&&randomquote[i]=="b")||((keystring[i]=="o"||keystring[i]=="p")&&randomquote[i]=="a")||((keystring[i]=="q"||keystring[i]=="r")&&randomquote[i]=="m")||((keystring[i]=="s"||keystring[i]=="t")&&randomquote[i]=="l")||((keystring[i]=="u"||keystring[i]=="v")&&randomquote[i]=="k")||((keystring[i]=="w"||keystring[i]=="x")&&randomquote[i]=="j")||((keystring[i]=="y"||keystring[i]=="z")&&randomquote[i]=="i")) {
+        ciphertext.push("u")
+       }
+       else if (((keystring[i]=="a"||keystring[i]=="b")&&randomquote[i]=="i")||((keystring[i]=="c"||keystring[i]=="d")&&randomquote[i]=="h")||((keystring[i]=="e"||keystring[i]=="f")&&randomquote[i]=="g")||((keystring[i]=="g"||keystring[i]=="h")&&randomquote[i]=="f")||((keystring[i]=="i"||keystring[i]=="j")&&randomquote[i]=="e")||((keystring[i]=="k"||keystring[i]=="l")&&randomquote[i]=="d")||((keystring[i]=="m"||keystring[i]=="n")&&randomquote[i]=="c")||((keystring[i]=="o"||keystring[i]=="p")&&randomquote[i]=="b")||((keystring[i]=="q"||keystring[i]=="r")&&randomquote[i]=="a")||((keystring[i]=="s"||keystring[i]=="t")&&randomquote[i]=="m")||((keystring[i]=="u"||keystring[i]=="v")&&randomquote[i]=="l")||((keystring[i]=="w"||keystring[i]=="x")&&randomquote[i]=="k")||((keystring[i]=="y"||keystring[i]=="z")&&randomquote[i]=="j")) {
+        ciphertext.push("v")
+       }
+       else if (((keystring[i]=="a"||keystring[i]=="b")&&randomquote[i]=="j")||((keystring[i]=="c"||keystring[i]=="d")&&randomquote[i]=="i")||((keystring[i]=="e"||keystring[i]=="f")&&randomquote[i]=="h")||((keystring[i]=="g"||keystring[i]=="h")&&randomquote[i]=="g")||((keystring[i]=="i"||keystring[i]=="j")&&randomquote[i]=="f")||((keystring[i]=="k"||keystring[i]=="l")&&randomquote[i]=="e")||((keystring[i]=="m"||keystring[i]=="n")&&randomquote[i]=="d")||((keystring[i]=="o"||keystring[i]=="p")&&randomquote[i]=="c")||((keystring[i]=="q"||keystring[i]=="r")&&randomquote[i]=="b")||((keystring[i]=="s"||keystring[i]=="t")&&randomquote[i]=="a")||((keystring[i]=="u"||keystring[i]=="v")&&randomquote[i]=="m")||((keystring[i]=="w"||keystring[i]=="x")&&randomquote[i]=="l")||((keystring[i]=="y"||keystring[i]=="z")&&randomquote[i]=="k")) {
+        ciphertext.push("w")
+       }
+       else if (((keystring[i]=="a"||keystring[i]=="b")&&randomquote[i]=="k")||((keystring[i]=="c"||keystring[i]=="d")&&randomquote[i]=="j")||((keystring[i]=="e"||keystring[i]=="f")&&randomquote[i]=="i")||((keystring[i]=="g"||keystring[i]=="h")&&randomquote[i]=="h")||((keystring[i]=="i"||keystring[i]=="j")&&randomquote[i]=="g")||((keystring[i]=="k"||keystring[i]=="l")&&randomquote[i]=="f")||((keystring[i]=="m"||keystring[i]=="n")&&randomquote[i]=="e")||((keystring[i]=="o"||keystring[i]=="p")&&randomquote[i]=="d")||((keystring[i]=="q"||keystring[i]=="r")&&randomquote[i]=="c")||((keystring[i]=="s"||keystring[i]=="t")&&randomquote[i]=="b")||((keystring[i]=="u"||keystring[i]=="v")&&randomquote[i]=="a")||((keystring[i]=="w"||keystring[i]=="x")&&randomquote[i]=="m")||((keystring[i]=="y"||keystring[i]=="z")&&randomquote[i]=="l")) {
+        ciphertext.push("x")
+       }
+       else if (((keystring[i]=="a"||keystring[i]=="b")&&randomquote[i]=="l")||((keystring[i]=="c"||keystring[i]=="d")&&randomquote[i]=="k")||((keystring[i]=="e"||keystring[i]=="f")&&randomquote[i]=="j")||((keystring[i]=="g"||keystring[i]=="h")&&randomquote[i]=="i")||((keystring[i]=="i"||keystring[i]=="j")&&randomquote[i]=="h")||((keystring[i]=="k"||keystring[i]=="l")&&randomquote[i]=="g")||((keystring[i]=="m"||keystring[i]=="n")&&randomquote[i]=="f")||((keystring[i]=="o"||keystring[i]=="p")&&randomquote[i]=="e")||((keystring[i]=="q"||keystring[i]=="r")&&randomquote[i]=="d")||((keystring[i]=="s"||keystring[i]=="t")&&randomquote[i]=="c")||((keystring[i]=="u"||keystring[i]=="v")&&randomquote[i]=="b")||((keystring[i]=="w"||keystring[i]=="x")&&randomquote[i]=="a")||((keystring[i]=="y"||keystring[i]=="z")&&randomquote[i]=="m")) {
+        ciphertext.push("y")
+       }
+       else if (((keystring[i]=="a"||keystring[i]=="b")&&randomquote[i]=="m")||((keystring[i]=="c"||keystring[i]=="d")&&randomquote[i]=="l")||((keystring[i]=="e"||keystring[i]=="f")&&randomquote[i]=="k")||((keystring[i]=="g"||keystring[i]=="h")&&randomquote[i]=="j")||((keystring[i]=="i"||keystring[i]=="j")&&randomquote[i]=="i")||((keystring[i]=="k"||keystring[i]=="l")&&randomquote[i]=="h")||((keystring[i]=="m"||keystring[i]=="n")&&randomquote[i]=="g")||((keystring[i]=="o"||keystring[i]=="p")&&randomquote[i]=="f")||((keystring[i]=="q"||keystring[i]=="r")&&randomquote[i]=="e")||((keystring[i]=="s"||keystring[i]=="t")&&randomquote[i]=="d")||((keystring[i]=="u"||keystring[i]=="v")&&randomquote[i]=="c")||((keystring[i]=="w"||keystring[i]=="x")&&randomquote[i]=="b")||((keystring[i]=="y"||keystring[i]=="z")&&randomquote[i]=="a")) {
+        ciphertext.push("z")
+       }
+    }
+    ciphertext = ciphertext.join("")
+    console.log("ciphertext: "+ ciphertext)
+
+    var display = []
+    for (let l=0; l<(ciphertext.length); l++) {
+      display.push(`<table><tr>
+      <td><input size="1" id= "${-l-1}"></td></tr>
+      <tr><td>${ciphertext[l]}</td>
+      </tr><tr><td><input size="1" id= "${l}"></td>
+      </tr></table>`)
+    }
+    for (let m=0; m<Math.floor(ciphertext.length/5); m++) {
+      let count = ((m+1)*8)-3
+      for (let o=0; o<3; o++ ){
+        display.splice(count, 0, `<table><tr>
+        <td></td></tr>
+        <tr><td></td>
+        </tr><tr><td></td>
+        </tr></table>`)
+      }
+    }
+
+    display = display.join(" ")
+    document.getElementById("tables").innerHTML = display
+
+    document.addEventListener ("keyup", (event) => {
+            var el = document.activeElement
+            if (event.key >= "a" && event.key <= "z") {
+                el.value = event.key
+                if (el.id != ciphertext.length-1 && el.id >= 0) {
+                    document.getElementById(Number(el.id)+1).focus()
+                }
+                else if (el.id != -ciphertext.length && el.id <0) {
+                    document.getElementById(Number(el.id)-1).focus()
+                }
+            }
+    })
+
+    var time = 0
+    function timer() {
+      time += 1
+      return time
+      console.log(time) 
+    }
+
+    var answer = []
+    function checkanswer() {
+      for (let p=0; p<ciphertext.length; p++) {
+        answer.push(document.getElementById(p).value)
+      }
+      answer=answer.join("")
+      if (answer == randomquote) {
+        alert("Correct \n Your time was " + time + " seconds")
+      }
+      else {
+        alert(" dumb ahh")
+      }
+      
+    }
+    
+    setInterval(timer, 1000)
+</script>

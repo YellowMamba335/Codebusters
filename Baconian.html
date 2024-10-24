@@ -1,0 +1,489 @@
+<link rel="stylesheet" href="coder.min.css" media="screen" />
+<style>
+  table td{
+    border: 0px solid white;
+    border-spacing:none;
+  }
+  td {
+    padding:.5rem;
+  }
+  table {
+    display: inline;
+  }
+</style>
+<nav class="navigation">
+    <a class="navigation-title">
+      Codebusters
+    </a>
+    <input type="checkbox" id="menu-toggle" />
+    <label class="menu-button float-right" for="menu-toggle"><i class="fas fa-bars"></i></label>
+    <ul class="navigation-list">
+          <li class="navigation-item">
+            <a class="navigation-link" href="https://yellowmamba335.github.io/Codebusters/">Complete Columnar</a>
+          </li>
+          <li class="navigation-item">
+            <a class="navigation-link" href="#">Hill</a>
+          </li>
+          <li class="navigation-item">
+            <a class="navigation-link" href="#">Porta</a>
+          </li>
+          <li class="navigation-item">
+            <a class="navigation-link" href="#">Baconian</a>
+          </li>
+          <li class="navigation-item">
+            <a class="navigation-link" href="#">Fractionated Morse</a>
+          </li>
+          <li class="navigation-item">
+            <a class="navigation-link" href="#">Cryptarithm</a>
+          </li>
+    </ul>
+</nav>
+
+<div id="stem"></div>
+<div id="disclaimer"></div>
+<button onclick=easy() id="easy">Easy</button>
+<button onclick=medium() id="medium">Medium</button>
+<button onclick=hard() id="hard">Hard</button>
+<div id="display"></div>
+<button onclick=checkanswer() id="checkanswer">Check</button><br>
+<div id="A">A:</div><br>
+<div id="aboxes"></div><br>
+<div id="B">B:</div><br>
+<div id="bboxes"></div>
+
+<script>
+    var ciphertext = []
+    var answer = []
+    var value = []
+    document.getElementById("checkanswer").style.display = "none"
+    document.getElementById("A").style.display = "none"
+    document.getElementById("B").style.display = "none"
+    var quotes = ['#3 pencils and quadrille pads.', "There ain't no journey what don't change you some.", "A champion is someone who gets up when he can't.", 'A friendship that can end never really began.', 'A goal without a plan is just a wish.', 'A library is more precious than a bank.', 'A library is thought in cold storage.', 'A little rebellion now and then is a good thing.', 'A man is known by the books he reads.', 'A Penny Saved is a Penny Earned', 'A positive change in approach improves quality.', "A proverb is one man's wit and all men's wisdom.", 'A true friend is the best Possession.', 'A witty saying proves nothing.', 'Acquiring knowledge is a form of imitation.', 'Act as if what you do makes a difference. It does.', 'Action is the universal language of success.', 'Aim higher in case you fall short.', 'All art is but dirtying the paper delicately.', "All feedback is relevant, even if it's not true.", 'All knowledge is worth having.', "All the fun's in how you say a thing.", 'Always do what you are afraid to do.', 'Anything can happen in life, especially nothing.', 'Anything worthy is worth the fight!', 'As long as one keeps searching, the answers come.', 'As to the Adjective: when in doubt, strike it out.', "Awake, arise or be for ever fall'n.", 'Baking is both an art and a science.', 'Be humble: have the courage to speak the truth.', "Be so good they can't ignore you.", 'Be willing to be a beginner every single morning.', 'Believe and act as if it were impossible to fail.', 'Books are a uniquely portable magic.', 'Boredom can be a lethal thing on a small island.', 'But how could you live and have no story to tell?', 'But still try for who knows what is possible!', 'But the cure for most obstacles is, Be decisive.', 'But to us, probability is the very guide of life.', "But what is life if you don't live it?", 'Change your perspective and change your life', 'Complex question can only be solved by patience.', 'Conflicts have small beginnings.', 'Discontent is the first necessity of progress.', 'Distrust any enterprise that requires new clothes.', "Don't act your role, be yourself.", "Don't just listen understand it.", "Don't just wish for success, earn it!", "Don't spell part backwards. It's a trap.", "Don't try to fix me, I'm not broken...", 'Even a child is known by his doings.', 'Even a trillion dollars is made up of cents.', 'Even strength must bow to wisdom sometimes.', 'Every moment of light and dark is a miracle.', 'Everyday, give yourself a good mental shampoo.', 'Find a purpose to serve, not a lifestyle to live.', 'For every fact there is an infinity of hypotheses.', 'From a small seed a mighty trunk may grow.', "Give me a museum and I'll fill it.", 'Go as far as you can see and you will see further.', 'Going back to something is harder than you think.', 'Great leaders create more leaders, not followers.', 'Happiness cannot be pursued; it must ensue.', 'Happiness equals reality minus expectations.', 'Happiness is answering your calling.', 'Hardships make or break people.', 'He who can have patience can have what he will.', 'He who speaks without an attentive ear is mute.', 'Helpfulness is the enemy of greed', "History doesn't repeat itself, it just stutters.", 'Humor is also a way of saying something serious.', 'I am not omniscient, but I know a lot.', 'I do not fear computers. I fear the lack of them.', 'I have a shocking memory - I remember everything.', 'I have nothing to declare except my genius.', 'I have stitched life into me like a rare organ', 'I know certain truths about life.', 'I know nothing except the fact of my ignorance.', 'I only know that I know nothing', 'I think that success is having fun.', "I think therefore I can't get anything done.", "I was willing to accept what I couldn't change.", 'I wonder if you can refuse to inherit the world.', 'I worship the quicksand he walks in.', "I'd learned that some things are best kept secret.", 'Ideas shape the course of history.', 'If a person is not free, his right is restricted.', 'If I can do it, you can do it. Anybody can.', 'If obstacles are large, jump higher.', "If you can't win by reason, go for volume.", "If you don't laugh, you'll cry.", 'If you read good books, you will be well-informed.', 'If you surrendered to the air, you could ride it.', 'If you want to find happiness, find gratitude.', "I'm not stubborn. My way is just better.", "I'm so optimistic my blood type is B Positive", 'Imitation is the sincerest form of television.', 'In chaos is where learning happens the most.', 'In order to fail, you must try first.', 'In the absence of vision, there are nightmares.', 'Instead of cursing the darkness, light a candle.', 'Invest your energy in the things you can control.', 'It is not the mountain we conquer but ourselves.', "It's easy to forget things you don't need anymore.", "I've got nothing to do today but smile.", 'Just a grain can bring a bird down from the skies.', 'Just be yourself, there is no one better.', "Just think. We're whizzing through the universe.", "Know what you're talking about.", 'Knowing it and seeing it are two different things.', 'Knowledge is in the end based on acknowledgement.', 'Knowledge is more than equivalent to force.', 'Knowledge is power as well as fame.', 'Knowledge not shared remains unknown', 'Knowledge will help you to solve any problem', 'Knowledge without action is empty as a shadow.', 'Leaders prioritize what they want.', 'Leadership is developed daily, not in a day.', 'life is a continous journey of transformation', 'Life is a journey worth making.', 'Life is either daring adventure or nothing.', 'Life is like a box of chocolates.', 'Life is more fun if you play games.', 'Light generates life and causes it to grow.', 'living is more than just a pulse', 'Love is the absence of judgment.', "Luck is believing you're lucky.", "Magic's just science that we don't understand yet.", 'Make your success a habit not just an act of whim.', 'Making comparisons can spoil your happiness.', 'Math is my Passion. Engineering is my Profession.', 'Math puns are the first sine of madness!', 'May success knock your door always', 'Mirrors should think longer before they reflect.', 'Money talks ...but all mine ever says is good-bye.', 'Morning will come, it has no choice.', "Mother Nature doesn't care if you're having fun.", 'Never confuse belief with knowledge.', 'Never fire a laser at a mirror.', 'Never regret anything that made you smile.', 'Never ruin an apology with an excuse.', 'Never was anything great achieved without danger.', 'No masterpiece was ever created by a lazy artist.', 'No sanction can stand against ignited minds.', "Not on one strand are all life's jewels strung.", "Nothing is fun until you're good at it.", 'Nothing succeeds like indifference to success.', 'Of all things, I liked books best.', "OK, so what's the speed of dark ?", 'On the other hand, you have different fingers.', "Once I get on a puzzle, I can't get off.", 'Once we accept our limits, we go beyond them.', 'One can never have enough socks', 'One lives in the hope of becoming a memory.', 'Only through knowing could a person become strong.', "Opportunities don't happen, you create them.", 'Or, rather, let us be more simple and less vain.', 'Our lives are just a journey back to THE LIGHT', 'Our true mentor in life is science.', 'Peace begins when expectations end.', 'People are sheep. TV is the shepherd.', 'Perfection is an undiscovered jewel.', 'Prosperity makes some friends and many enemies.', 'Quality is all about taking care of the details.', 'Quantum Mechanics: The stuff dreams are made of.', 'Quiet people have the loudest minds.', 'Reading a book is like re-writing it for yourself.', 'Rejection is an opportunity for your selection.', "Rockets are cool. There's no getting around that.", "Science doesn't take sides, does it?", 'Science is based not on faith but in skeptism', 'Science is only a Latin word for knowledge', 'Science is organized knowledge.', 'Science is the poetry of reality.', 'Search for the good ways. And walk in right path.', 'Show me a hero and I will write you a tragedy.', 'Smile suppress worries as Rose suppress thorns.', 'Snoring keeps the monsters away.', 'Some people feel the rain. Others just get wet.', 'Some say life is the thing, but I prefer reading.', 'Something deeply hidden had to be behind things.', 'Somewhere, the zebra is dancing.', "Spend the afternoon, you can't take it with you.", 'State first, subject second, statesman last.', 'Statistics are no substitute for judgment.', 'Stories, knowledge...they set the mind alight.', 'Storms make trees take deeper roots.', 'Strangers are just friends waiting to happen.', 'Success is a decision, not a gift.', 'Success without happiness is a mirage of life.', 'The beautiful is always bizarre.', 'The best substitute for brains is silence.', "The book you don't read won't help.", 'The deeper a thing is, the more interesting it is', 'The earliest fisherman catches the fattest fish.', 'The easiest way to do anything is properly.', 'The energy of the mind is the essence of life.', 'The function of freedom is to free someone else.', 'The gods too are fond of a joke.', 'The grand thing is to be able to reason backwards.', 'The greatest ideas are the simplest.', 'The history of art is the history of revivals.', 'The important thing is not to stop questioning.', 'The joy of a spirit is the measure of its power.', 'The more thou search, the more thou shall marvel.', 'The only joy in the world is to begin.', 'The only real valuable thing is intuition.', 'The perfect is the enemy of the good.', "The physicist's greatest tool is his wastebasket.", 'The possibility of the dream gives strength.', 'The present is a point just passed.', 'The purpose of fun is to live it.', 'The real mystery is the known, not the unknown.', 'The reward of a thing well done is having done it.', 'The secret to success is constancy of purpose.', 'The smaller the creature, the bolder its spirit.', 'The solar system consists of Jupiter plus debris.', 'The sprint is like life ... blink and you miss it.', 'The universe is made of stories, not of atoms.', 'The way a person stands may disguise who they are.', 'The wishbone will never replace the backbone', 'The world is a stage and the play is badly cast.', 'The years teach much which the days never know.', 'There are no traffic jams on the extra mile.', 'There is no success where there are no secrets.', 'There was, I found, always more to learn.', 'Think before you speak. Read before you think.', 'This book fills a much-needed gap.', "Those who don't jump will never fly.", 'Those who hurt others will also hurt themselves.', 'Time flies over us, but leaves its shadow behind.', 'Time is not made of atoms to manipulate it back.', 'Time plays a major role in achieving success', 'Tis an ill cook that cannot lick his own fingers.', 'To be a success, think of happiness.', 'To be fond of learning is near to wisdom.', 'To be noble, help others to succeed', 'To be too knowing is a downfall.', 'To listen be silent, to succeed be persistent', 'To those who will see, the world waits.', 'Too low they build, who build beneath the stars.', 'Too many locks, not enough keys.', "Torture numbers, and they'll confess to anything.", 'Travel far enough, you meet yourself.', "Turns out even NASA can't improve on duct tape.", "Unbeing dead isn't being alive.", 'Universe consists of frozen light.', 'Victory only comes through wear and tear.', 'Vision is your first creation of the future.', 'War is never a lasting solution for any problem.', 'We have art to save ourselves from the truth.', 'We learn and grow Always building on what we know', 'We made too many wrong mistakes.', 'We must be the change we wish to see in the world.', 'We must work while we have strength.', 'Well done is better than well said.', "We're going to turn this team around 360 degrees.", 'What did the vegan say? I made a big missed steak.', "What dog can't bark? A hot dog.", 'What is a rebel? A man who says no.', "What is an alien's favorite candy? A Mars bar!", 'What we see depends mainly on what we look for.', "What's a horse's favorite sport? Stable Tennis.", "What's meant to be will always find a way", 'When we are centered in joy, we attain our wisdom.', 'When you develop yourself, you grow humanity.', 'Where is human nature so weak as in the bookstore?', 'Where there is unity there is always victory.', 'Who can count the sand by the sea?', 'Who says life is fair, where is that written?', "Why don't you light that candle ?", "Why don't you write books people can read?", "Win or lose, you are trying, that's what matters.", 'Wisdom is the daughter of experience.', 'Wit is the only wall between us and the dark.', 'With time involved, everything is temporary.', 'Without knowledge, we are weak.', 'Without music, life would be a blank to me.', 'Wonder is the seed of knowledge', "Words may show a man's wit, actions his meaning.", 'Yell codebusters rule for a hundred extra points', 'You are worth about 3 dollars worth in chemicals.', 'You can do anything you set your mind to', 'You can know a lot and still be stupid.', 'You cannot predict the future.', "You can't have everything. Where would you put it?", "You fall at times and that's how you learn.", 'You get what anybody gets - you get a lifetime.', 'You live but once; you might as well be amusing.', 'You may delay, but time will not.', 'You rush a miracle worker, you get lousy miracles!', 'You were born to stand out, stop trying to fit in.', "You'll never find a rainbow if you're looking down", 'Your daily product determines how far you go']
+    var randomquote = quotes[Math.floor(Math.random()*quotes.length)].toLowerCase().replace(/[^a-z]/g, "")
+    console.log(randomquote)
+    
+    document.getElementById("easy").addEventListener ("click", () => {
+        document.getElementById("easy").style.display = "none"
+        document.getElementById("medium").style.display = "none"
+        document.getElementById("hard").style.display = "none"
+        document.getElementById("checkanswer").style.display = "initial"
+    })
+    document.getElementById("medium").addEventListener ("click", () => {
+        document.getElementById("easy").style.display = "none"
+        document.getElementById("medium").style.display = "none"
+        document.getElementById("hard").style.display = "none"
+        document.getElementById("checkanswer").style.display = "initial"
+        document.getElementById("A").style.display = "initial"
+        document.getElementById("B").style.display = "initial"
+    })
+    document.getElementById("hard").addEventListener ("click", () => {
+        document.getElementById("easy").style.display = "none"
+        document.getElementById("medium").style.display = "none"
+        document.getElementById("hard").style.display = "none"
+        document.getElementById("checkanswer").style.display = "initial"
+    })
+
+    function easy() {
+        for (i=0; i<randomquote.length; i++) {
+            if (randomquote[i] == "a") {
+                ciphertext.push("AAAAA")
+            }
+            else if (randomquote[i] == "b") {
+                ciphertext.push("AAAAB")
+            }
+            else if (randomquote[i] == "c") {
+                ciphertext.push("AAABA")
+            }
+            else if (randomquote[i] == "d") {
+                ciphertext.push("AAABB")
+            }
+            else if (randomquote[i] == "e") {
+                ciphertext.push("AABAA")
+            }
+            else if (randomquote[i] == "f") {
+                ciphertext.push("AABAB")
+            }
+            else if (randomquote[i] == "g") {
+                ciphertext.push("AABBA")
+            }
+            else if (randomquote[i] == "h") {
+                ciphertext.push("AABBB")
+            }
+            else if (randomquote[i] == "i" || randomquote[i] == "j") {
+                ciphertext.push("ABAAA")
+            }
+            else if (randomquote[i] == "k") {
+                ciphertext.push("ABAAB")
+            }
+            else if (randomquote[i] == "l") {
+                ciphertext.push("ABABA")
+            }
+            else if (randomquote[i] == "m") {
+                ciphertext.push("ABABB")
+            }
+            else if (randomquote[i] == "n") {
+                ciphertext.push("ABBAA")
+            }
+            else if (randomquote[i] == "o") {
+                ciphertext.push("ABBAB")
+            }
+            else if (randomquote[i] == "p") {
+                ciphertext.push("ABBBA")
+            }
+            else if (randomquote[i] == "q") {
+                ciphertext.push("ABBBB")
+            }
+            else if (randomquote[i] == "r") {
+                ciphertext.push("BAAAA")
+            }
+            else if (randomquote[i] == "s") {
+                ciphertext.push("BAAAB")
+            }
+            else if (randomquote[i] == "t") {
+                ciphertext.push("BAABA")
+            }
+            else if (randomquote[i] == "u" || randomquote[i] == "v") {
+                ciphertext.push("BAABB")
+            }
+            else if (randomquote[i] == "w") {
+                ciphertext.push("BABAA")
+            }
+            else if (randomquote[i] == "x") {
+                ciphertext.push("BABAB")
+            }
+            else if (randomquote[i] == "y") {
+                ciphertext.push("BABBA")
+            }
+            else if (randomquote[i] == "z") {
+                ciphertext.push("BABBB")
+            }
+        }
+        ciptxtjoin = ciphertext.join("")
+        console.log(ciptxtjoin)
+
+        var display = []
+        for (let l=0; l<(ciphertext.length); l++) {
+        display.push(`<table>
+        <tr><td>${ciphertext[l]}</td>
+        </tr><tr><td><input size="1" id= "${l}" place= "display"></td>
+        </tr></table>`)
+        }
+        
+        document.getElementById("display").innerHTML = display.join("")
+
+        document.addEventListener ("keyup", (event) => {
+            var el = document.activeElement
+            if (el.getAttribute("place") === "display") {
+                if (event.key >= "a" && event.key <= "z") {
+                    el.value = event.key
+                    if (el.id != ciphertext.length-1) {
+                        document.getElementById(Number(el.id)+1).focus()
+                    }
+                }
+            }
+    })
+
+        
+    }
+
+    function medium() {
+        var letters = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"]
+        var groupa = []
+        var groupb = []
+        for (let i=0; i<13; i++) {
+            var randpos = Math.floor(Math.random()*letters.length)
+            var rand = letters[randpos]
+            groupa.push(rand)
+            letters.splice(randpos, 1)
+        }
+        groupb = letters
+        for (let i=0; i<randomquote.length; i++) {
+            var a1 = groupa[Math.floor(Math.random()*13)]
+            var a2 = groupa[Math.floor(Math.random()*13)]
+            var a3 = groupa[Math.floor(Math.random()*13)]
+            var a4 = groupa[Math.floor(Math.random()*13)]
+            var a5 = groupa[Math.floor(Math.random()*13)]
+            var b1 = groupb[Math.floor(Math.random()*13)]
+            var b2 = groupb[Math.floor(Math.random()*13)]
+            var b3 = groupb[Math.floor(Math.random()*13)]
+            var b4 = groupb[Math.floor(Math.random()*13)]
+            
+            if (randomquote[i] == "a") {
+                ciphertext.push([a1,a2,a3,a4,a5])
+            }
+            else if (randomquote[i] == "b") {
+                ciphertext.push([a1,a2,a3,a4,b1])
+            }
+            else if (randomquote[i] == "c") {
+                ciphertext.push([a1,a2,a3,b1,a5])
+            }
+            else if (randomquote[i] == "d") {
+                ciphertext.push([a1,a2,a3,b1,b2])
+            }
+            else if (randomquote[i] == "e") {
+                ciphertext.push([a1,a2,b1,a4,a5])
+            }
+            else if (randomquote[i] == "f") {
+                ciphertext.push([a1,a2,b1,a4,b2])
+            }
+            else if (randomquote[i] == "g") {
+                ciphertext.push([a1,a2,b1,b2,a5])
+            }
+            else if (randomquote[i] == "h") {
+                ciphertext.push([a1,a2,b1,b2,b3])
+            }
+            else if (randomquote[i] == "i" || randomquote[i] == "j") {
+                ciphertext.push([a1,b1,a3,a4,a5])
+            }
+            else if (randomquote[i] == "k") {
+                ciphertext.push([a1,b1,a3,a4,b2])
+            }
+            else if (randomquote[i] == "l") {
+                ciphertext.push([a1,b1,a3,b2,a5])
+            }
+            else if (randomquote[i] == "m") {
+                ciphertext.push([a1,b1,a3,b2,b3])
+            }
+            else if (randomquote[i] == "n") {
+                ciphertext.push([a1,b1,b2,a4,a5])
+            }
+            else if (randomquote[i] == "o") {
+                ciphertext.push([a1,b1,b2,a4,b3])
+            }
+            else if (randomquote[i] == "p") {
+                ciphertext.push([a1,b1,b2,b3,a5])
+            }
+            else if (randomquote[i] == "q") {
+                ciphertext.push([a1,b1,b2,b3,b4])
+            }
+            else if (randomquote[i] == "r") {
+                ciphertext.push([b1,a2,a3,a4,a5])
+            }
+            else if (randomquote[i] == "s") {
+                ciphertext.push([b1,a2,a3,a4,b2])
+            }
+            else if (randomquote[i] == "t") {
+                ciphertext.push([b1,a2,a3,b2,a5])
+            }
+            else if (randomquote[i] == "u" || randomquote[i] == "v") {
+                ciphertext.push([b1,a2,a3,b2,b3])
+            }
+            else if (randomquote[i] == "w") {
+                ciphertext.push([b1,a2,b2,a4,a5])
+            }
+            else if (randomquote[i] == "x") {
+                ciphertext.push([b1,a2,b2,a4,b3])
+            }
+            else if (randomquote[i] == "y") {
+                ciphertext.push([b1,a2,b2,b3,a5])
+            }
+            else if (randomquote[i] == "z") {
+                ciphertext.push([b1,a2,b2,b3,b4])
+            }
+        }
+        for (let i=0; i<ciphertext.length; i++) {
+            ciphertext[i] = ciphertext[i].join("")
+        }
+        ciptxtjoin = ciphertext.join("")
+        console.log(ciptxtjoin)
+
+        var display = []
+        for (let l=0; l<(ciphertext.length); l++) {
+        display.push(`<table>
+        <tr><td>${ciphertext[l]}</td>
+        </tr><tr><td><input size="1" id= "${l}"></td>
+        </tr></table>`)
+        }
+
+        document.getElementById("stem").innerHTML = "You are given that the quote starts with " + randomquote[0]+randomquote[1]+randomquote[2]+randomquote[3]+randomquote[4]
+        document.getElementById("display").innerHTML = display.join("")
+
+        var aboxes = []
+        for (let i=0; i<13; i++) {
+            aboxes.push(`<input size="1" id="${-i-1}"></input>`)
+        }
+        aboxes = aboxes.join("")
+        document.getElementById("aboxes").innerHTML = aboxes
+
+        var bboxes = []
+        for (let i=0; i<13; i++) {
+            bboxes.push(`<input size="1" id="${-i-14}"></input>`)
+        }
+        bboxes = bboxes.join("")
+        document.getElementById("bboxes").innerHTML = bboxes
+
+        document.addEventListener ("keyup", (event) => {
+            var el = document.activeElement
+            if (event.key >= "a" && event.key <= "z") {
+                el.value = event.key
+                if (el.id != ciphertext.length-1 && el.id >= 0) {
+                    document.getElementById(Number(el.id)+1).focus()
+                }
+                else if (el.id != -13 && -13< el.id > 0) {
+                    document.getElementById(Number(el.id)-1).focus()
+                }
+                if (el.id != -26 && el.id<=-14) {
+                    document.getElementById(Number(el.id)-1).focus()
+                }
+            }
+    })
+
+        
+    }
+
+    function hard() {
+        document.getElementById("disclaimer").innerHTML = "Disclaimer: treat any symbols as lowercase letters or letters with an odd position in the alphabet if necessary."
+        var caze = ["upperlower", "symbols", "oddeven"]
+        var randcase = caze[Math.floor(Math.random()*3)]
+        var groupa = []
+        var groupb = []
+        if (randcase=="upperlower") {
+            groupa = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z", "\!", "\@", "\#", "\$", "\%", "\^", "\&", "\*", "\(", "\)", "\:", "\;", "\?"]
+            groupb = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"]
+        }
+        else if (randcase=="symbols") {
+            groupa = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z","A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z",]
+            groupb = ["\!", "\@", "\#", "\$", "\%", "\^", "\&", "\*", "\(", "\)", "\:", "\;", "\?"]
+        }
+        else if (randcase=="oddeven") {
+            groupa = ["a", "c", "e", "g", "i", "k", "m", "o", "q", "s", "u","w", "y", "A",, "C", "E",  "G", "I", "K", "M", "O", "Q", "S", "U", "W", "Y", "\!", "\@", "\#", "\$", "\%", "\^", "\&", "\*", "\(", "\)", "\:", "\;", "\?"]
+            groupb = ["b", "d", "f", "h", "j", "l", "n", "p", "r", "t", "v",  "x", "z", "B", "D", "F", "H", "J", "L", "N", "P", "R", "T", "V", "X", "Z",]
+        }
+
+        for (let i=0; i<randomquote.length; i++) {
+            var a1 = groupa[Math.floor(Math.random()*groupa.length)]
+            var a2 = groupa[Math.floor(Math.random()*groupa.length)]
+            var a3 = groupa[Math.floor(Math.random()*groupa.length)]
+            var a4 = groupa[Math.floor(Math.random()*groupa.length)]
+            var a5 = groupa[Math.floor(Math.random()*groupa.length)]
+            var b1 = groupb[Math.floor(Math.random()*groupb.length)]
+            var b2 = groupb[Math.floor(Math.random()*groupb.length)]
+            var b3 = groupb[Math.floor(Math.random()*groupb.length)]
+            var b4 = groupb[Math.floor(Math.random()*groupb.length)]
+            
+            if (randomquote[i] == "a") {
+                ciphertext.push([a1,a2,a3,a4,a5])
+            }
+            else if (randomquote[i] == "b") {
+                ciphertext.push([a1,a2,a3,a4,b1])
+            }
+            else if (randomquote[i] == "c") {
+                ciphertext.push([a1,a2,a3,b1,a5])
+            }
+            else if (randomquote[i] == "d") {
+                ciphertext.push([a1,a2,a3,b1,b2])
+            }
+            else if (randomquote[i] == "e") {
+                ciphertext.push([a1,a2,b1,a4,a5])
+            }
+            else if (randomquote[i] == "f") {
+                ciphertext.push([a1,a2,b1,a4,b2])
+            }
+            else if (randomquote[i] == "g") {
+                ciphertext.push([a1,a2,b1,b2,a5])
+            }
+            else if (randomquote[i] == "h") {
+                ciphertext.push([a1,a2,b1,b2,b3])
+            }
+            else if (randomquote[i] == "i" || randomquote[i] == "j") {
+                ciphertext.push([a1,b1,a3,a4,a5])
+            }
+            else if (randomquote[i] == "k") {
+                ciphertext.push([a1,b1,a3,a4,b2])
+            }
+            else if (randomquote[i] == "l") {
+                ciphertext.push([a1,b1,a3,b2,a5])
+            }
+            else if (randomquote[i] == "m") {
+                ciphertext.push([a1,b1,a3,b2,b3])
+            }
+            else if (randomquote[i] == "n") {
+                ciphertext.push([a1,b1,b2,a4,a5])
+            }
+            else if (randomquote[i] == "o") {
+                ciphertext.push([a1,b1,b2,a4,b3])
+            }
+            else if (randomquote[i] == "p") {
+                ciphertext.push([a1,b1,b2,b3,a5])
+            }
+            else if (randomquote[i] == "q") {
+                ciphertext.push([a1,b1,b2,b3,b4])
+            }
+            else if (randomquote[i] == "r") {
+                ciphertext.push([b1,a2,a3,a4,a5])
+            }
+            else if (randomquote[i] == "s") {
+                ciphertext.push([b1,a2,a3,a4,b2])
+            }
+            else if (randomquote[i] == "t") {
+                ciphertext.push([b1,a2,a3,b2,a5])
+            }
+            else if (randomquote[i] == "u" || randomquote[i] == "v") {
+                ciphertext.push([b1,a2,a3,b2,b3])
+            }
+            else if (randomquote[i] == "w") {
+                ciphertext.push([b1,a2,b2,a4,a5])
+            }
+            else if (randomquote[i] == "x") {
+                ciphertext.push([b1,a2,b2,a4,b3])
+            }
+            else if (randomquote[i] == "y") {
+                ciphertext.push([b1,a2,b2,b3,a5])
+            }
+            else if (randomquote[i] == "z") {
+                ciphertext.push([b1,a2,b2,b3,b4])
+            }
+        }
+        for (let i=0; i<ciphertext.length; i++) {
+            ciphertext[i] = ciphertext[i].join("")
+        }
+        ciptxtjoin = ciphertext.join("")
+        console.log(ciptxtjoin)
+
+        var display = []
+        for (let l=0; l<(ciphertext.length); l++) {
+        display.push(`<table>
+        <tr><td>${ciphertext[l]}</td>
+        </tr><tr><td><input size="1" id= "${l}"></td>
+        </tr></table>`)
+        }
+
+        document.getElementById("display").innerHTML = display.join("")
+
+        document.addEventListener ("keyup", (event) => {
+            var el = document.activeElement
+            if (event.key >= "a" && event.key <= "z") {
+                el.value = event.key
+                if (el.id != ciphertext.length-1) {
+                    document.getElementById(Number(el.id)+1).focus()
+                }
+                
+            }
+    })
+
+        
+    }
+
+
+    var time = 0
+    function timer() {
+        time += 1
+        return time
+        console.log(time) 
+    }
+    var answer = []
+    function checkanswer() {
+        for (let p=0; p<ciphertext.length; p++) {
+            answer.push(document.getElementById(p).value)
+        }
+        answer=answer.join("")
+        if (answer == randomquote) {
+            alert("Correct \nYour time was " + time + " seconds")
+        }
+        else {
+            alert(" dumb ahh")
+        }
+        
+        }
+    setInterval(timer, 1000)
+</script>
