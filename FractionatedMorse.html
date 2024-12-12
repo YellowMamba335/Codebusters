@@ -29,37 +29,25 @@
     <input type="checkbox" id="menu-toggle" />
     <label class="menu-button float-right" for="menu-toggle"><i class="fas fa-bars"></i></label>
     <ul class="navigation-list">
-        <li class="navigation-item">
-          <a class="navigation-link" href="https://yellowmamba335.github.io/Codebusters/index">Complete Columnar</a>
-        </li>
-        <li class="navigation-item">
-          <a class="navigation-link" href="https://yellowmamba335.github.io/Codebusters/Hill.html">Hill</a>
-        </li>
-        <li class="navigation-item">
-          <a class="navigation-link" href="https://yellowmamba335.github.io/Codebusters/Porta.html">Porta</a>
-        </li>
-        <li class="navigation-item">
-          <a class="navigation-link" href="https://yellowmamba335.github.io/Codebusters/Baconian.html">Baconian</a>
-        </li>
-        <li class="navigation-item">
-          <a class="navigation-link" href="https://yellowmamba335.github.io/Codebusters/FractionatedMorse.html">Fractionated Morse</a>
-        </li>
-        <li class="navigation-item">
-          <a class="navigation-link" href="https://yellowmamba335.github.io/Codebusters/Nihilist.html">Nihilist</a>
-        </li>
-        <li class="navigation-item">
-          <a class="navigation-link" href="https://yellowmamba335.github.io/Codebusters/patristocrat.html">Patristocrat</a>
-        </li>
-        <li class="navigation-item">
-          <a class="navigation-link" href="https://yellowmamba335.github.io/Codebusters/xenocrypt.html">Xenocrypt</a>
-        </li>
-        <li class="navigation-item">
-          <a class="navigation-link" href="https://yellowmamba335.github.io/Codebusters/CompleteColumnarMobile.html">Complete Columnar Mobile</a>
-        </li>
-        <li class="navigation-item">
-            <a class="navigation-link" href="https://cryptograms.puzzlebaron.com/">Aristocrat (Cryptograms)</a>
+          <li class="navigation-item">
+            <a class="navigation-link" href="#">Complete Columnar</a>
           </li>
-  </ul>
+          <li class="navigation-item">
+            <a class="navigation-link" href="#">Hill</a>
+          </li>
+          <li class="navigation-item">
+            <a class="navigation-link" href="#">Porta</a>
+          </li>
+          <li class="navigation-item">
+            <a class="navigation-link" href="#">Baconian</a>
+          </li>
+          <li class="navigation-item">
+            <a class="navigation-link" href="#">Fractionated Morse</a>
+          </li>
+          <li class="navigation-item">
+            <a class="navigation-link" href="#">Cryptarithm</a>
+          </li>
+    </ul>
 </nav>
 
 <div id="stem"></div>
@@ -102,9 +90,11 @@
 
     var morsecode = ["•-", "-•••", "-•-•", "-••", "•", "••-•", "--•", "••••", "••", "•---", "-•-", "•-••", "--", "-•", "---", "-••-", "--•-", "•-•", "•••", "-", "••-", "•••-", "•--", "•--•", "-•--", "--••"]
     var morsecodequote = []
+    var translatedquote = []
     for(let i=0; i<randomquote.length; i++) {
-        if (randomquote[i] != "\s") {
+        if (randomquote[i] != /\s/) {
             morsecodequote.push(morsecode[(randomquote[i].charCodeAt())-97], "x")
+            translatedquote.push(randomquote[i])
         }
         else {
             morsecodequote.push["x"]
@@ -112,6 +102,7 @@
 
     }
     morsecodequote = morsecodequote.join("")
+    translatedquote = translatedquote.join("")
     morseciptxt = []
     for (let i=0; i<Math.floor((morsecodequote.length)/3); i++) {
         morseciptxt.push([morsecodequote[3*i],morsecodequote[3*i+1],morsecodequote[3*i+2]])
@@ -123,7 +114,6 @@
         for (let j=0; j<26; j++) {
             if (keyalph[j][1] == morseciptxt[i]) {
                 ciphertext.push(keyalph[j][0])
-                console.log(morseciptxt[j] + ciphertext[j])
             }
         }
     }
@@ -155,11 +145,9 @@
         for (let i=0; i<26; i++) {
             keysinlist.splice(i, 1, document.getElementById(i).value)
         }
-        console.log(keysinlist)
         var getind = keysinlist.indexOf(event.key)
         if (el.id != getind){
             val =1
-            console.log("yes")
         }
         if (val==0 && event.key != "Backspace") {
             if (event.key >= "a" && event.key <= "z") {
@@ -194,7 +182,6 @@
     function timer() {
         time += 1
         return time
-        console.log(time) 
     }
     function checkanswer() {
         var answer = document.getElementById("answerbox").value;
@@ -207,6 +194,9 @@
         }
     }
     setInterval(timer, 1000);
+
+    console.log(morsecodequote)
+    console.log(translatedquote)
 
     randquotestrip = randomquote.replace(/[ ]/g, "")
     document.getElementById("stem").innerHTML = "You are given that the quote starts with " + randquotestrip[0] + randquotestrip[1] + randquotestrip[2] + randquotestrip[3] + randquotestrip[4]
